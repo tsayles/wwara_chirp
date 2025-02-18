@@ -28,20 +28,14 @@ from logging.handlers import RotatingFileHandler
 import pandas as pd
 from chirp.chirp_common import TONES, DTCS_CODES, MODES
 
-# Set up logging
-log = logging.getLogger(__name__)
-log.setLevel(logging.DEBUG)
-formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-handler = RotatingFileHandler('wwara-csv-to-chirp-csv.log', maxBytes=100000, backupCount=5)
-handler.setFormatter(formatter)
-log.addHandler(handler)
+from chirp_validator import CHIRP_Validator
 
 # Set up the CSV file paths
-input_file = '../sample_files/WWARA-rptrlist-SAMPLE.csv'
-output_file = '../sample_files/wwara-chirp.csv'
+INPUT_FILE = '../sample_files/WWARA-rptrlist-SAMPLE.csv'
+OUTPUT_FILE = '../sample_files/wwara-chirp.csv'
 
 # Set up the CSV column names for the wwara input file
-wwara_columns = [
+WWARA_COLUMNS = [
     'FC_RECORD_ID', 'SOURCE', 'OUTPUT_FREQ', 'INPUT_FREQ', 'STATE', 'CITY',
     'LOCALE', 'CALL', 'SPONSOR', 'CTCSS_IN', 'CTCSS_OUT', 'DCS_CDCSS', 'DTMF',
     'LINK', 'FM_WIDE', 'FM_NARROW', 'DSTAR_DV', 'DSTAR_DD', 'DMR',
@@ -52,16 +46,23 @@ wwara_columns = [
 
 # Set up the CSV column names for the chirp output file
 
-chirp_columns = [
+CHIRP_COLUMNS = [
     'Location', 'Name', 'Frequency', 'Duplex', 'Offset', 'Tone', 'rToneFreq',
     'cToneFreq', 'DtcsCode', 'DtcsPolarity', 'RxDtcsCode', 'CrossMode', 'Mode',
     'TStep', 'Skip', 'Power', 'Comment', 'URCALL', 'RPT1CALL', 'RPT2CALL',
     'DVCODE'
 ]
 
+# Set up logging
+log = logging.getLogger(__name__)
+log.setLevel(logging.DEBUG)
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+handler = RotatingFileHandler('wwara-csv-to-chirp-csv.log', maxBytes=100000, backupCount=5)
+handler.setFormatter(formatter)
+log.addHandler(handler)
 
 # create a pandas dataframe for the chirp output file
-chirp_table = pd.DataFrame(columns=chirp_columns)
+chirp_table = pd.DataFrame(columns=CHIRP_COLUMNS)
 
 """
 The constraints in this script have been revised to match those defined
@@ -107,128 +108,6 @@ channels = []
 # # Set up the CHIRP memory channel list
 # channel_list = []
 
-
-def validate_input_file(input_file):
-    if not os.path.isfile(input_file):
-        log.error(f'Input file not found: {input_file}')
-        return False
-    return True
-
-def validate_output_file(output_file):
-    if os.path.isfile(output_file):
-        log.warning(f'Output file already exists: {output_file}')
-        return False
-    return True
-
-def validate_location(location):
-    if location < channel_min or location > channel_max:
-        log.error(f'Invalid memory location: {location}')
-        return False
-    return True
-
-def validate_frequency(frequency):
-    if not re.match(r'^\d+(\.\d+)?$', frequency):
-        log.error(f'Invalid frequency: {frequency}')
-        return False
-    frequency_num = float(frequency)
-    if frequency_num < frequency_min or frequency_num > frequency_max:
-        log.error(f'Invalid frequency: {frequency}')
-        return False
-    return True
-
-def validate_duplex(duplex):
-    if duplex not in ['+', '-', '']:
-        log.error(f'Invalid duplex setting: {duplex}')
-        return False
-    return True
-
-def validate_offset(offset):
-    # TODO setup an optional frequency_out parameter to check that the offset
-    #  is standard for that band.  If it isn't, then log a warning.
-
-    if offset == '':
-        return True
-
-    if not re.match(r'^\d+(\.\d+)?$', offset):
-        log.error(f'Invalid offset: {offset}')
-        return False
-
-    ofset_num = float(offset)
-    if ofset_num < offset_min or ofset_num > offset_max:
-        log.error(f'Invalid offset: {offset}')
-        return False
-    return True
-
-def validate_tone(tone):
-    if tone not in TONES and tone != 'Tone' and tone != 'DTCS' and tone != '':
-        log.error(f'Invalid tone: {tone}')
-        return False
-    return True
-
-def validate_tone_mode(tone_mode):
-    if tone_mode not in ['Tone', 'DTCS'] and tone_mode != '':
-        log.error(f'Invalid tone mode: {tone_mode}')
-        return False
-    return True
-
-def validate_dtcs_code(dtcs_code):
-    if dtcs_code not in DTCS_CODES:
-        log.error(f'Invalid DTCS code: {dtcs_code}')
-        return False
-    return True
-
-def validate_dtcs_polarity(dtcs_polarity):
-    if dtcs_polarity not in ['NN', 'NR', 'RN', 'RR']:
-        log.error(f'Invalid DTCS polarity: {dtcs_polarity}')
-        return False
-    return True
-
-def validate_mode(mode):
-    if mode not in MODES and mode != '':
-        log.error(f'Invalid mode: {mode}')
-        return False
-    return True
-
-def validate_name(name):
-    if len(name) > 16:
-        log.error(f'Invalid name length: {name}')
-        return False
-    if not re.match(r'^[\w\s-]+$', name):
-        log.error(f'Invalid characters in name: {name}')
-        return False
-    return True
-
-def validate_comment(comment):
-    if len(comment) > 255:
-        log.error(f'Invalid comment length: {comment}')
-        return False
-    return True
-
-def validate_row(chirp_row):
-    if not validate_location(chirp_row['Location']):
-        return False
-    if not validate_frequency(chirp_row['Frequency']):
-        return False
-    if not validate_duplex(chirp_row['Duplex']):
-        return False
-    if chirp_row['Duplex'] != '':
-        if not validate_offset(chirp_row['Offset']):
-            return False
-    if not validate_tone(chirp_row['Tone']):
-        return False
-    if chirp_row['Tone'] == 'DTCS':
-        if not validate_dtcs_code(chirp_row['DTCS Code']):
-            return False
-        if not validate_dtcs_polarity(chirp_row['DTCS Polarity']):
-            return False
-    if not validate_mode(chirp_row['Mode']):
-        return False
-    if not validate_name(chirp_row['Name']):
-        return False
-    if not validate_comment(chirp_row['Comment']):
-        return False
-    return True
-
 # define function to process a wwara row and return a chirp row
 def process_row(wwara_row):
     global channel
@@ -244,7 +123,7 @@ def process_row(wwara_row):
         'cToneFreq': '88.5',
         'DtcsCode': 0,
         'DtcsPolarity': 'NN',
-        'RxDtcsCode': '023',
+        'RxDtcsCode': '23',
         'CrossMode': 'Tone->Tone',
         'Mode': '',
         'TStep': '5.00',
@@ -261,7 +140,8 @@ def process_row(wwara_row):
     tone = ''
     c_tone_freq = '88.5'
     r_tone_freq = '88.5'
-    dtcs_code = '023'
+    # dtcs_code = '023'
+    dtcs_code = '23'
     dtcs_polarity = 'NN'
     mode = ''
 
@@ -431,13 +311,15 @@ def write_output_file(output_file, chirp_table):
     log.info(f'Output file written: {output_file}')
     log.info(f'Number of memory channels written: {len(chirp_table)}')
 
-def main(input_file, output_file, columns):
+def main(input_file, output_file):
 
     global chirp_table
 
-    if not validate_input_file(input_file):
+    validator = CHIRP_Validator()
+
+    if not validator.validate_input_file(input_file):
         sys.exit(1)
-    if not validate_output_file(output_file):
+    if not validator.validate_output_file(output_file):
         sys.exit(1)
 
     log.debug(f'Reading input file: {input_file}')
@@ -449,7 +331,8 @@ def main(input_file, output_file, columns):
 
     for index, wwara_row in df.iterrows():
         chirp_row = process_row(wwara_row)
-        if not validate_row(chirp_row):
+
+        if not validator.validate_row(chirp_row):
             error_location = chirp_row['Location']
             log.error(f'Invalid row data: {error_location}')
             continue
@@ -468,8 +351,7 @@ def main(input_file, output_file, columns):
 if __name__ == '__main__':
     log.info('WWARA CHIRP Export Script Update')
     log.debug('Script started')
-    log.debug(f'Input file: {input_file}')
-    log.debug(f'Output file: {output_file}')
-    log.debug(f'Columns: {chirp_columns}')
+    log.debug(f'Input file: {INPUT_FILE}')
+    log.debug(f'Output file: {OUTPUT_FILE}')
 
-    main(input_file, output_file, chirp_columns)
+    main(INPUT_FILE, OUTPUT_FILE)

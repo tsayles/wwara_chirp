@@ -1,0 +1,11 @@
+Location,Frequency,Duplex,Offset,Tone,DTCS Code,DTCS Polarity,Mode,Name,Comment
+-1,145.000,+,0.600,Tone,023,NN,FM,Repeater 1,Test comment 1
+2,abc,-,0.600,DTCS,025,NR,FM,Repeater 2,Test comment 2
+3,147.000,invalid,0.000,,026,RN,FM,Repeater 3,Test comment 3
+4,148.000,+,abc,Tone,023,NN,FM,Repeater 4,Test comment 4
+5,149.000,-,0.600,Invalid,025,NR,FM,Repeater 5,Test comment 5
+6,150.000,,0.000,,invalid,RN,FM,Repeater 6,Test comment 6
+7,151.000,+,0.600,Tone,023,NN,Invalid,Repeater 7,Test comment 7
+8,152.000,-,0.600,DTCS,025,NR,FM,Repeater 8,Test comment 8
+9,153.000,,0.000,,026,RN,FM,Repeater 9,Test comment 9
+10,2000.000,+,0.600,Tone,023,NN,FM,Repeater 10,Test comment 10
