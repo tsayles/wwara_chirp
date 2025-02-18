@@ -12,7 +12,7 @@ setup(
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
+        'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'Intended Audience :: Amateur Radio Operators',
         'License :: OSI Approved :: MIT License',
