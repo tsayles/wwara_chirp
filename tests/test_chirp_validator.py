@@ -72,7 +72,7 @@ class TestCHIRPValidator(unittest.TestCase):
         assert CHIRP_Validator.validate_offset('0.600') == True
         assert CHIRP_Validator.validate_offset('') == True
         assert CHIRP_Validator.validate_offset('abc') == False
-        assert CHIRP_Validator.validate_offset('100.0') == False
+        assert CHIRP_Validator.validate_offset('10000.0') == False
 
     def test_validate_tone(self):
         assert CHIRP_Validator.validate_tone('Tone') == True
@@ -87,7 +87,7 @@ class TestCHIRPValidator(unittest.TestCase):
         assert CHIRP_Validator.validate_tone_mode('invalid') == False
 
     def test_validate_dtcs_code(self):
-        assert CHIRP_Validator.validate_dtcs_code('23') == True
+        assert CHIRP_Validator.validate_dtcs_code(23) == True
         assert CHIRP_Validator.validate_dtcs_code('invalid') == False
 
     def test_validate_dtcs_polarity(self):

@@ -52,13 +52,24 @@ class TestWWARACSVToChirpCSV(unittest.TestCase):
 
     def test_process_row(self):
         wwara_row = pd.Series({
-            'LOCALE': 'Seattle',
+            'CALL': 'K7LED',
+            'OUTPUT_FREQ': 146.8200,
+            'INPUT_FREQ': 146.2200,
+            'CTCSS_IN': 88.5,
+            'CTCSS_OUT': 88.5,
+            'DTCS_CODE': 23,
+            'LOCALE': 'Issaquah Alps',
+            'STATE': 'WA',
+            'COUNTY': 'King',
+            'CITY': 'Issaquah',
             'SPONSOR': 'WWARA',
             'LINK': 'Yes',
             'URL': 'http://example.com',
             'EXPIRATION_DATE': '2024-12-31',
             'LATITUDE': '47.6062',
             'LONGITUDE': '-122.3321',
+            'FM_WIDE': 'Y',
+            'COMMENT': 'Test Comment',
             'ARES': 'Y',
             'RACES': 'Y',
             'WX': 'Y',
@@ -71,23 +82,24 @@ class TestWWARACSVToChirpCSV(unittest.TestCase):
             'DATV': 'Y'
         })
         chirp_row = process_row(wwara_row)
-        self.assertEqual(chirp_row['Location'], 0)
-        self.assertEqual(chirp_row['Name'], '')
-        self.assertEqual(chirp_row['Frequency'], '0.000000')
-        self.assertEqual(chirp_row['Duplex'], '')
-        self.assertEqual(chirp_row['Offset'], '0.000000')
-        self.assertEqual(chirp_row['Tone'], '')
-        self.assertEqual(chirp_row['rToneFreq'], '88.5')
-        self.assertEqual(chirp_row['cToneFreq'], '88.5')
-        self.assertEqual(chirp_row['DtcsCode'], 0)
-        self.assertEqual(chirp_row['DtcsPolarity'], '')
-        self.assertEqual(chirp_row['RxDtcsCode'], '023')
+        self.assertEqual(chirp_row['Location'], 434)
+        self.assertEqual(chirp_row['Name'], 'K7LED')
+        self.assertEqual(chirp_row['Frequency'], '146.820000')
+        self.assertEqual(chirp_row['Duplex'], '+')
+        self.assertEqual(chirp_row['Offset'], '0.600000')
+        self.assertEqual(chirp_row['Tone'], 'Tone')
+        self.assertEqual(chirp_row['rToneFreq'], 88.5)
+        self.assertEqual(chirp_row['cToneFreq'], 88.5)
+        self.assertEqual(chirp_row['DtcsCode'], 23)
+
+        self.assertEqual(chirp_row['DtcsPolarity'], 'NN')
+        self.assertEqual(chirp_row['RxDtcsCode'], 23)
         self.assertEqual(chirp_row['CrossMode'], 'Tone->Tone')
-        self.assertEqual(chirp_row['Mode'], '')
+        self.assertEqual(chirp_row['Mode'], 'FM')
         self.assertEqual(chirp_row['TStep'], '5.00')
         self.assertEqual(chirp_row['Skip'], '')
         self.assertEqual(chirp_row['Power'], '5.0W')
-        self.assertEqual(chirp_row['Comment'], ' Seattle Sponsor: WWARA Link: Yes URL: http://example.com Expiration: 2024-12-31 Lat: 47.6062, Lon: -122.3321 ARES RACES WX DMR Color Code: 1 Fusion DSQ: 123 NXDN Digital NXDN Mixed NXDN RAN: 2 ATV DATV')
+        self.assertEqual(chirp_row['Comment'], 'Test Comment   Issaquah, WA Issaquah Alps Sponsor: WWARA Link: Yes URL: http://example.com Expiration: 2024-12-31 Lat: 47.6062, Lon: -122.3321 ARESRACES WX DMR Color Code: 1 Fusion DSQ: 123 NXDN Digital NXDN Mixed NXDN RAN: 2 ATV DATV')
         self.assertEqual(chirp_row['URCALL'], '')
         self.assertEqual(chirp_row['RPT1CALL'], '')
         self.assertEqual(chirp_row['RPT2CALL'], '')

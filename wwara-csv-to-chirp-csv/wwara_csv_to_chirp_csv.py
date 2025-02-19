@@ -141,7 +141,7 @@ def process_row(wwara_row):
     c_tone_freq = '88.5'
     r_tone_freq = '88.5'
     # dtcs_code = '023'
-    dtcs_code = '23'
+    dtcs_code = 23
     dtcs_polarity = 'NN'
     mode = ''
 
@@ -155,10 +155,10 @@ def process_row(wwara_row):
 
     if frequency_out > frequency_in:
         duplex = '+'
-        offset = (frequency_out - frequency_in) / 1000 # convert to kHz
+        offset = (frequency_out - frequency_in)
     else:
         duplex = '-'
-        offset = (frequency_in - frequency_out) / 1000 # convert to kHz
+        offset = (frequency_in - frequency_out)
 
     if wwara_row['CTCSS_IN'] != '':
         tone = 'Tone'
@@ -288,7 +288,7 @@ def process_row(wwara_row):
         'cToneFreq': c_tone_freq,
         'DtcsCode': dtcs_code,
         'DtcsPolarity': dtcs_polarity,
-        'RxDtcsCode': '023',
+        'RxDtcsCode': 23,
         'CrossMode': 'Tone->Tone',
         'Mode': mode,
         'TStep': '5.00',

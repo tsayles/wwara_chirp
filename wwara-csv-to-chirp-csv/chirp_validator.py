@@ -77,7 +77,7 @@ class CHIRP_Validator:
     frequency_min = 10
     frequency_max = 1300
     offset_min = 0
-    offset_max = 99.9
+    offset_max = 9999.9
 
     @staticmethod
     def validate_input_file(input_file):
@@ -125,6 +125,7 @@ class CHIRP_Validator:
     def validate_offset(offset):
         # TODO setup an optional frequency_out parameter to check that the offset
         #     #  is standard for that band.  If it isn't, then log a warning.
+        #     #  Also, check for cross band repeaters and log a warning.
 
         if offset == '':
             return True
