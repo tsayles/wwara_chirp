@@ -10,7 +10,7 @@
         Run these tests using a test runner such as unittest.
 
         Example:
-            python -m unittest tests/test_wwara_csv_to_chirp_csv.py
+            python -m unittest tests/test_wwara_chirp.py
 
     Test Cases:
         - test_validate_input_file: Tests the validation of input file paths.
