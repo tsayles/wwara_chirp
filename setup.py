@@ -16,14 +16,13 @@ setup(
         'Intended Audience :: Developers',
         'Intended Audience :: Amateur Radio Operators',
         'License :: OSI Approved :: MIT License',
-        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
         'programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
     ],
     entry_points={
         'console_scripts': [
-            'wwara-chirp=wwara_csv_to_chirp_csv:main',
+            'wwara-chirp=wwara_chirp:main',
         ],
     },
     python_requires='>=3.6',
