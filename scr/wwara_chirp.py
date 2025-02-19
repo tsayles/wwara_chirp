@@ -31,8 +31,8 @@ from chirp.chirp_common import TONES, DTCS_CODES, MODES
 from chirp_validator import CHIRP_Validator
 
 # Set up the CSV file paths
-INPUT_FILE = '../../sample_files/WWARA-rptrlist-SAMPLE.csv'
-OUTPUT_FILE = '../../sample_files/wwara-chirp.csv'
+INPUT_FILE = '../sample_files/WWARA-rptrlist-SAMPLE.csv'
+OUTPUT_FILE = '../sample_files/wwara-chirp.csv'
 
 # Set up the CSV column names for the wwara input file
 WWARA_COLUMNS = [
