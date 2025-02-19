@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='wwara-chirp',
     version='2.0',
-    packages=['wwara-csv-to-chirp-csv'],
+    packages=['wwara-chirp'],
     url='https://github.com/tsayles/wwara-chirp.git',
     license='MIT',
     aauthor='Tom Sayles (KE4HET), GitHub Copilot',

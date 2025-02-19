@@ -57,7 +57,7 @@ CHIRP_COLUMNS = [
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-handler = RotatingFileHandler('wwara-csv-to-chirp-csv.log', maxBytes=100000, backupCount=5)
+handler = RotatingFileHandler('wwara-chirp.log', maxBytes=100000, backupCount=5)
 handler.setFormatter(formatter)
 log.addHandler(handler)
 

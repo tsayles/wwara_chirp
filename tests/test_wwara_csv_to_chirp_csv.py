@@ -23,9 +23,7 @@ import os
 import unittest
 import pandas as pd
 
-from wwara_csv_to_chirp_csv import (
-    write_output_file, process_row, main)
-
+from wwara_chirp import write_output_file, main, process_row
 
 # Add the module's directory to the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))

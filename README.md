@@ -34,7 +34,7 @@ To use the updated WWARA CHIRP export script, follow these steps:
 ## Usage
 To export WWARA repeater data for CHIRP programming, run the script with the
 following command:
-* `python3 -m wwara_csv_to_chirp.py <input_file> <output_file>`
+* `python3 -m wwara-chirp.py <input_file> <output_file>`
 
 * `<input_file>` is the CSV file containing WWARA repeater data and
 * `<output_file>` is the CSV file to be generated for CHIRP import. (Be sure 

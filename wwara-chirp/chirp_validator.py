@@ -6,62 +6,6 @@ CHIRP_Validator
 This module provides a set of validation functions encapsulated in the CHIRP_Validator class.
 The purpose of this class is to validate various fields and data structures used in the CHIRP CSV conversion process.
 
-Usage:
-    from chirp_validator import CHIRP_Validator
-
-    # Validate an input file
-    is_valid_input = CHIRP_Validator.validate_input_file('input.csv')
-
-    # Validate an output file
-    is_valid_output = CHIRP_Validator.validate_output_file('output.csv')
-
-    # Validate a memory location
-    is_valid_location = CHIRP_Validator.validate_location(100)
-
-    # Validate a frequency
-    is_valid_frequency = CHIRP_Validator.validate_frequency('145.000')
-
-    # Validate a duplex setting
-    is_valid_duplex = CHIRP_Validator.validate_duplex('+')
-
-    # Validate an offset
-    is_valid_offset = CHIRP_Validator.validate_offset('0.600')
-
-    # Validate a tone
-    is_valid_tone = CHIRP_Validator.validate_tone('Tone')
-
-    # Validate a tone mode
-    is_valid_tone_mode = CHIRP_Validator.validate_tone_mode('Tone')
-
-    # Validate a DTCS code
-    is_valid_dtcs_code = CHIRP_Validator.validate_dtcs_code('023')
-
-    # Validate a DTCS polarity
-    is_valid_dtcs_polarity = CHIRP_Validator.validate_dtcs_polarity('NN')
-
-    # Validate a mode
-    is_valid_mode = CHIRP_Validator.validate_mode('FM')
-
-    # Validate a name
-    is_valid_name = CHIRP_Validator.validate_name('Repeater')
-
-    # Validate a comment
-    is_valid_comment = CHIRP_Validator.validate_comment('This is a comment.')
-
-    # Validate a complete row
-    chirp_row = {
-        'Location': 100,
-        'Frequency': '145.000',
-        'Duplex': '+',
-        'Offset': '0.600',
-        'Tone': 'Tone',
-        'DTCS Code': '023',
-        'DTCS Polarity': 'NN',
-        'Mode': 'FM',
-        'Name': 'Repeater',
-        'Comment': 'This is a comment.'
-    }
-    is_valid_row = CHIRP_Validator.validate_row(chirp_row)
 """
 
 import os
