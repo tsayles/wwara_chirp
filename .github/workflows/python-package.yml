@@ -36,12 +36,19 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    # This step is for debugging purposes only
+    - name: Folder structure debugging
+      run: |
+        echo "Python path: $PYTHONPATH"
+        echo "Working directory: $(pwd)"
+        ls -la
+        echo "Contents of src and tests directories"
+        ls -la src
+        echo "Contents of src directory"        
+        ls -la tests
     - name: Test with pytest
       run: |
-        pwd
-        ls -la
-        ls -la src
-        ls -la tests
-        echo "Python path: $PYTHONPATH"
+        cd tests
         echo
         pytest
