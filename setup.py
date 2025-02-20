@@ -2,11 +2,11 @@ from setuptools import setup
 
 setup(
     name='wwara-chirp',
-    version='2.0',
+    version='2.0.1',
     packages=['wwara-chirp'],
     url='https://github.com/tsayles/wwara-chirp.git',
     license='MIT',
-    aauthor='Tom Sayles (KE4HET), GitHub Copilot',
+    author='Tom Sayles (KE4HET), GitHub Copilot',
     author_email='tsayles@Soot-n-Smoke.com',
     description='WWARA CHIRP Export Script Update',
     long_description=open('README.md').read(),
@@ -20,11 +20,7 @@ setup(
         'programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
     ],
-    entry_points={
-        'console_scripts': [
-            'wwara-chirp=wwara_chirp:main',
-        ],
-    },
+
     python_requires='>=3.6',
     keywords='WWARA CHIRP',
     project_urls={
