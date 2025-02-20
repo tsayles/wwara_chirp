@@ -18,6 +18,7 @@ Author: Tom Sayles, KE4HET, with assistance from GitHub Copilot
 License: MIT License (see LICENSE file)
 
 """
+import argparse
 import logging
 import os
 import re
@@ -312,6 +313,27 @@ def write_output_file(output_file, chirp_table):
     log.info(f'Number of memory channels written: {len(chirp_table)}')
 
 def main(input_file, output_file):
+    log.info('WWARA CHIRP Export Script Update')
+
+    if input_file is None and output_file is None:
+        log.info('Using command line or default input and output files')
+
+        parser = argparse.ArgumentParser(description='WWARA CHIRP Export Script Update')
+        parser.add_argument('input_file', help='Path to the input CSV file')
+        parser.add_argument('output_file', help='Path to the output CSV file')
+        args = parser.parse_args()
+
+        if not args.input_file:
+            args.input_file = INPUT_FILE
+        if not args.output_file:
+            args.output_file = OUTPUT_FILE
+
+        input_file = args.input_file
+        output_file = args.output_file
+
+    log.debug('Script started')
+    log.debug(f'Input file: {INPUT_FILE}')
+    log.debug(f'Output file: {OUTPUT_FILE}')
 
     global chirp_table
 
@@ -349,9 +371,5 @@ def main(input_file, output_file):
 
 
 if __name__ == '__main__':
-    log.info('WWARA CHIRP Export Script Update')
-    log.debug('Script started')
-    log.debug(f'Input file: {INPUT_FILE}')
-    log.debug(f'Output file: {OUTPUT_FILE}')
 
-    main(INPUT_FILE, OUTPUT_FILE)
+    main()

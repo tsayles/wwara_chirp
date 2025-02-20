@@ -1,12 +1,16 @@
-from setuptools import setup
+from importlib.metadata import entry_points
+
+from setuptools import setup, find_packages
 
 setup(
     name='wwara-chirp',
     version='2.0.1',
-    packages=['wwara-chirp'],
+    # packages=['wwara-chirp'],
+    packages=find_packages(where='src'),
+    package_dir={'': 'src'},
     url='https://github.com/tsayles/wwara-chirp.git',
     license='MIT',
-    author='Tom Sayles (KE4HET), GitHub Copilot',
+    author='Tom Sayles (KE4HET)',
     author_email='tsayles@Soot-n-Smoke.com',
     description='WWARA CHIRP Export Script Update',
     long_description=open('README.md').read(),
@@ -14,7 +18,11 @@ setup(
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
-        'Intended Audience :: Amateur Radio Operators',
+        'Intended Audience :: Science/Research'
+        'Intended Audience :: Other Audience', # Amateur Radio Operators
+        'Topic :: Communications :: Ham Radio',
+        'Topic :: Education',
+        'Topic :: Scientific/Engineering',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 3.10',
         'programming Language :: Python :: 3.11',
@@ -26,5 +34,10 @@ setup(
     project_urls={
         'Bug Reports': 'https://github.com/tsayles/wwara-chirp/issues',
         'Source': 'https://github.com/tsayles/wwara-chirp',
-    }
+    },
+    entry_points={
+        'console_scripts': [
+            'wwara-chirp=wwara_chirp:main',
+        ],
+    },
 )

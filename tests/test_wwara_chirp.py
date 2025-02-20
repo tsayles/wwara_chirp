@@ -23,7 +23,7 @@ import os
 import unittest
 import pandas as pd
 
-from wwara_chirp import write_output_file, main, process_row
+from src.wwara_chirp import write_output_file, main, process_row
 
 # Add the module's directory to the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -37,10 +37,9 @@ class TestWWARACSVToChirpCSV(unittest.TestCase):
         os.remove('test_files/test_output.csv')
 
     def test_main(self):
-        main('test_files/WWARA-rptrlist-TEST.csv',
-             'test_files/test_output.csv')
+        main('test_files/WWARA-rptrlist-TEST.csv', 'test_files/test_output.csv')
         self.assertTrue(os.path.exists('test_files/test_output.csv'))
-        #check that the output file matches the reference output file
+        # check that the output file matches the reference output file
         with open('test_files/test_output.csv', 'r') as f:
             output = f.read()
         with open('test_files/reference_output.csv', 'r') as f:
