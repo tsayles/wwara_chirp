@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='wwara-chirp',
-    version='2.0.1',
+    version='2.0.2',
     # packages=['wwara-chirp'],
     packages=find_packages(where='src'),
     package_dir={'': 'src'},
