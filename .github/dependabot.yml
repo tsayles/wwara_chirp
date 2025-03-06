@@ -1,0 +1,68 @@
+# new dependabot.yml file to configure dependabot
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    ignore:
+      - dependency-name: "actions/checkout"
+        versions: ["v2"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v2"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v3"]
+      - dependency-name: "actions/checkout"
+        versions: ["v4"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v3"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v4"]
+      - dependency-name: "actions/checkout"
+        versions: ["v4"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v3"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v4"]
+      - dependency-name: "actions/checkout"
+        versions: ["v4"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v3"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v4"]
+      - dependency-name: "actions/checkout"
+        versions: ["v4"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v3"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v4"]
+      - dependency-name: "actions/checkout"
+        versions: ["v4"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v3"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v4"]
+      - dependency-name: "actions/checkout"
+        versions: ["v4"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v3"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v4"]
+      - dependency-name: "actions/checkout"
+        versions: ["v4"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v3"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v4"]
+      - dependency-name: "actions/checkout"
+        versions: ["v4"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v3"]
+      - dependency-name: "actions/setup-python"
+        versions: ["v4"]
+      - dependency-name: "actions/checkout"
+        versions: ["v4"]
+      - package-ecosystem: "pip"
+        directory: "/"
+        schedule:
+          interval: "daily"
