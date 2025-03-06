@@ -1,0 +1,39 @@
+# Dependabot configuration file
+version: 2  # Specify the version of the Dependabot configuration
+
+updates:
+  # Configuration for GitHub Actions dependencies
+    # Specify the ecosystem for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"  # Root directory of the repository
+    schedule:
+      interval: "daily"  # Check for updates daily
+    target-branch: "dev"  # Target branch for updates
+    ignore:
+        # Ignore specific versions of actions/checkout
+      - dependency-name: "actions/checkout"
+        versions: ["v2"]
+        # Ignore specific versions of actions/setup-python
+      - dependency-name: "actions/setup-python"
+        versions: ["v2", "v3", "v4"]
+
+  # Configuration for GitHub Actions dependencies for the master branch
+    # Specify the ecosystem for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"  # Root directory of the repository
+    schedule:
+      interval: "daily"  # Check for updates daily
+    target-branch: "master"  # Target branch for updates
+    ignore:
+        # Ignore specific versions of actions/checkout
+      - dependency-name: "actions/checkout"
+        versions: ["v2"]
+        # Ignore specific versions of actions/setup-python
+      - dependency-name: "actions/setup-python"
+        versions: ["v2", "v3", "v4"]
+
+  # Configuration for Python dependencies managed by pip
+  - package-ecosystem: "pip"  # Specify the ecosystem for pip (Python)
+    directory: "/"  # Root directory of the repository
+    schedule:
+      interval: "daily"  # Check for updates daily
