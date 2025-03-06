@@ -3,9 +3,9 @@ from importlib.metadata import entry_points
 from setuptools import setup, find_packages
 
 setup(
-    name='wwara-chirp',
+    name='wwara_chirp',
     version='2.0.2',
-    # packages=['wwara-chirp'],
+    # packages=['wwara_chirp'],
     packages=find_packages(where='src'),
     package_dir={'': 'src'},
     url='https://github.com/tsayles/wwara-chirp.git',
@@ -37,7 +37,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'wwara-chirp=wwara_chirp:main',
+            'wwara_chirp=wwara_chirp:main',
         ],
     },
 )

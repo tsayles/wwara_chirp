@@ -26,10 +26,18 @@ supported radios without the schema-related errors encountered with XML.
 
 ## Installation
 To use the updated WWARA CHIRP export script, follow these steps:
-1. use pip to install from the PyPi repository:
-* `pip install wwara-chirp`
-3. or clone this repository and run the script locally.
-*`git clone https://github.com/tsayles/wwara-chirp.git`
+1. Use pip to install from the PyPi repository:
+   * `pip install wwara_chirp`
+2. Or clone this repository and run the script locally:
+   * `git clone https://github.com/tsayles/wwara-chirp.git`
+
+## Setting the PYTHONPATH
+If you cloned the repository, set the `PYTHONPATH` to include the `src` 
+and `tests` directories:
+
+```bash
+export PYTHONPATH=$(pwd)/src:$(pwd)/tests:$PYTHONPATH
+```
 
 ## Usage
 To export WWARA repeater data for CHIRP programming, run the script with the
