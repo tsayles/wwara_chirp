@@ -29,7 +29,8 @@ from logging.handlers import RotatingFileHandler
 import pandas as pd
 from chirp.chirp_common import TONES, DTCS_CODES, MODES
 
-from .chirpvalidator import ChirpValidator
+# from .chirpvalidator import ChirpValidator
+from wwara_chirp.chirpvalidator import ChirpValidator
 
 # Set up the CSV file paths
 INPUT_FILE = '../../sample_files/WWARA-rptrlist-SAMPLE.csv'
