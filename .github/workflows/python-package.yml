@@ -58,8 +58,9 @@ jobs:
 
     - name: Test command line execution
       run: |
-        input_file=sample_files/WWARA-rptrlist-SAMPLE.csv
-        output_file=sample_files/test_output.csv
+        input_file=tests/test_files/WWARA_Chirp_2021-10-01.csv
+        output_file=tests/test_files/test_output.csv
+        reference_output_file=tests/test_files/reference_output.csv
         script_path=wwara_chirp.wwara_chirp
 
         # Set PYTHONPATH to include the src directory
@@ -80,10 +81,10 @@ jobs:
           exit 1
         fi
 
-        # Check that the output file matches the reference output file
-        if ! diff -q $output_file sample_files/reference_output.csv; then
+        # Check that the output file matches the reference_output_file
+        if ! diff -q $output_file $reference_output_file; then
           echo "Output file does not match reference output"
-          diff -q $output_file sample_files/reference_output.csv
+          diff -q $output_file $reference_output_file
           exit 1
         fi
 
