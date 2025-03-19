@@ -58,7 +58,7 @@ jobs:
 
     - name: Test command line execution
       run: |
-        input_file=tests/test_files/WWARA_Chirp_2021-10-01.csv
+        input_file=tests/test_files/WWARA-rptrlist-TEST.csv
         output_file=tests/test_files/test_output.csv
         reference_output_file=tests/test_files/reference_output.csv
         script_path=wwara_chirp.wwara_chirp
