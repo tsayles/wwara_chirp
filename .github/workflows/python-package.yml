@@ -64,6 +64,12 @@ jobs:
 
         # Set PYTHONPATH to include the src directory
         export PYTHONPATH=$(pwd)/src
+        
+        echo "PYTHONPATH=$PYTHONPATH"
+        echo "Working directory: $(pwd)"
+        echo "Input file: $input_file"
+        echo "Output file: $output_file"
+        echo "Script path: $script_path"
 
         # Run the script as a module
         python -m $script_path $input_file $output_file
