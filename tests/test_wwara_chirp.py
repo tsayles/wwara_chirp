@@ -17,13 +17,14 @@
         - test_validate_output_file: Tests the validation of output file paths.
         - test_process_row: Tests the processing of WWARA rows into CHIRP rows.
 """
-
+import subprocess
 import sys
 import os
 import unittest
 import pandas as pd
 
-from src.wwara_chirp import write_output_file, main, process_row
+from wwara_chirp.wwara_chirp import write_output_file, main, process_row
+
 
 # Add the module's directory to the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -111,6 +112,26 @@ class TestWWARACSVToChirpCSV(unittest.TestCase):
         self.assertEqual(chirp_row['RPT1CALL'], '')
         self.assertEqual(chirp_row['RPT2CALL'], '')
         self.assertEqual(chirp_row['DVCODE'], '')
+
+    def test_command_line_execution(self):
+        input_file = 'sample_files/WWARA-rptrlist-SAMPLE.csv'
+        output_file = 'sample_files/test_output.csv'
+
+        # Run the script using subprocess
+        result = subprocess.run(
+            ['python', 'src/wwara_chirp/wwara_chirp.py', input_file, output_file],
+            capture_output=True,
+            text=True
+        )
+
+        # Check that the script executed successfully
+        self.assertEqual(result.returncode, 0)
+
+        # Check that the output file was created
+        self.assertTrue(os.path.exists(output_file))
+
+        # Clean up the output file
+        os.remove(output_file)
 
     if __name__ == '__main__':
         unittest.main()

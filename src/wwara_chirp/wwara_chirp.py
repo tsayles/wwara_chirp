@@ -29,11 +29,11 @@ from logging.handlers import RotatingFileHandler
 import pandas as pd
 from chirp.chirp_common import TONES, DTCS_CODES, MODES
 
-from chirp_validator import CHIRP_Validator
+from .chirpvalidator import ChirpValidator
 
 # Set up the CSV file paths
-INPUT_FILE = '../sample_files/WWARA-rptrlist-SAMPLE.csv'
-OUTPUT_FILE = '../sample_files/wwara-chirp.csv'
+INPUT_FILE = '../../sample_files/WWARA-rptrlist-SAMPLE.csv'
+OUTPUT_FILE = '../../sample_files/wwara-chirp.csv'
 
 # Set up the CSV column names for the wwara input file
 WWARA_COLUMNS = [
@@ -58,6 +58,7 @@ CHIRP_COLUMNS = [
 log = logging.getLogger(__name__)
 log.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+# handler = RotatingFileHandler('../../tests/wwara-chirp.log', maxBytes=100000, backupCount=5)
 handler = RotatingFileHandler('wwara-chirp.log', maxBytes=100000, backupCount=5)
 handler.setFormatter(formatter)
 log.addHandler(handler)
@@ -337,7 +338,7 @@ def main(input_file, output_file):
 
     global chirp_table
 
-    validator = CHIRP_Validator()
+    validator = ChirpValidator()
 
     if not validator.validate_input_file(input_file):
         sys.exit(1)
@@ -372,4 +373,4 @@ def main(input_file, output_file):
 
 if __name__ == '__main__':
 
-    main()
+    main(None, None)
