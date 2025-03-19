@@ -52,3 +52,26 @@ jobs:
         cd tests
         echo
         pytest
+
+    - name: Test command line execution
+      run: |
+        input_file=sample_files/WWARA-rptrlist-SAMPLE.csv
+        output_file=sample_files/test_output.csv
+        script_path=src/wwara_chirp/wwara_chirp.py
+        
+        # Run the script using subprocess
+        python $script_path $input_file $output_file
+        
+        # Check that the output file was created
+        if [ ! -f $output_file ]; then
+          echo "Output file not created"
+          exit 1
+        fi
+        
+        # Check that the output file matches the reference output file
+        if ! diff -q $output_file sample_files/reference_output.csv; then
+          echo "Output file does not match reference output"
+          exit 1
+        fi
+        
+        echo "Command line execution test passed"

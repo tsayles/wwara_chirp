@@ -46,7 +46,7 @@ class TestWWARACSVToChirpCSV(unittest.TestCase):
         with open('test_files/reference_output.csv', 'r') as f:
             reference_output = f.read()
         self.assertEqual(output, reference_output)
-        # os.remove('test_files/test_output.csv')
+        os.remove('test_files/test_output.csv')
 
     def test_process_row(self):
         wwara_row = pd.Series({
@@ -113,25 +113,36 @@ class TestWWARACSVToChirpCSV(unittest.TestCase):
         self.assertEqual(chirp_row['RPT2CALL'], '')
         self.assertEqual(chirp_row['DVCODE'], '')
 
-    def test_command_line_execution(self):
-        input_file = 'sample_files/WWARA-rptrlist-SAMPLE.csv'
-        output_file = 'sample_files/test_output.csv'
-
-        # Run the script using subprocess
-        result = subprocess.run(
-            ['python', 'src/wwara_chirp/wwara_chirp.py', input_file, output_file],
-            capture_output=True,
-            text=True
-        )
-
-        # Check that the script executed successfully
-        self.assertEqual(result.returncode, 0)
-
-        # Check that the output file was created
-        self.assertTrue(os.path.exists(output_file))
-
-        # Clean up the output file
-        os.remove(output_file)
+    ## moved to a GitHiub action. See .github/workflows/python-package.yml
+    #
+    # def test_command_line_execution(self):
+    #     input_file = 'sample_files/WWARA-rptrlist-SAMPLE.csv'
+    #     output_file = 'sample_files/test_output.csv'
+    #
+    #     # Print the current working directory for debugging
+    #     print("Current working directory:", os.getcwd())
+    #
+    #     # Run the script using subprocess
+    #     script_path = os.path.abspath(os.path.join(os.path.dirname(__file__),
+    #                                                '../src/wwara_chirp/wwara_chirp.py'))
+    #     result = subprocess.run(
+    #         ['python', script_path, input_file, output_file],
+    #         capture_output=True,
+    #         text=True
+    #     )
+    #
+    #     # Print stdout and stderr for debugging
+    #     print("stdout:", result.stdout)
+    #     print("stderr:", result.stderr)
+    #
+    #     # Check that the script executed successfully
+    #     self.assertEqual(result.returncode, 0)
+    #
+    #     # Check that the output file was created
+    #     self.assertTrue(os.path.exists(output_file))
+    #
+    #     # Clean up the output file
+    #     os.remove(output_file)
 
     if __name__ == '__main__':
         unittest.main()
