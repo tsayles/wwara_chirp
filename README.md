@@ -31,7 +31,7 @@ To use the updated WWARA CHIRP export script, follow these steps:
 2. Or clone this repository and run the script locally:
    * `git clone https://github.com/tsayles/wwara-chirp.git`
 
-## Setting the PYTHONPATH
+### Setting the PYTHONPATH
 If you cloned the repository, set the `PYTHONPATH` to include the `src` 
 and `tests` directories:
 
