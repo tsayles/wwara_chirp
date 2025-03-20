@@ -17,13 +17,14 @@
         - test_validate_output_file: Tests the validation of output file paths.
         - test_process_row: Tests the processing of WWARA rows into CHIRP rows.
 """
-
+import subprocess
 import sys
 import os
 import unittest
 import pandas as pd
 
-from src.wwara_chirp import write_output_file, main, process_row
+from wwara_chirp.wwara_chirp import write_output_file, main, process_row
+
 
 # Add the module's directory to the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -45,7 +46,7 @@ class TestWWARACSVToChirpCSV(unittest.TestCase):
         with open('test_files/reference_output.csv', 'r') as f:
             reference_output = f.read()
         self.assertEqual(output, reference_output)
-        # os.remove('test_files/test_output.csv')
+        os.remove('test_files/test_output.csv')
 
     def test_process_row(self):
         wwara_row = pd.Series({
@@ -61,7 +62,7 @@ class TestWWARACSVToChirpCSV(unittest.TestCase):
             'CITY': 'Issaquah',
             'SPONSOR': 'WWARA',
             'LINK': 'Yes',
-            'URL': 'http://example.com',
+            'URL': 'https://example.com',
             'EXPIRATION_DATE': '2024-12-31',
             'LATITUDE': '47.6062',
             'LONGITUDE': '-122.3321',
@@ -79,7 +80,10 @@ class TestWWARACSVToChirpCSV(unittest.TestCase):
             'DATV': 'Y'
         })
         chirp_row = process_row(wwara_row)
-        self.assertEqual(chirp_row['Location'], 434)
+        # the 'Location' field is not tested because it is dependent on how
+        # may rows have been processed in the previous tests.
+        # self.assertEqual(chirp_row['Location'], 434)
+
         self.assertEqual(chirp_row['Name'], 'K7LED')
         self.assertEqual(chirp_row['Frequency'], '146.820000')
         self.assertEqual(chirp_row['Duplex'], '+')
@@ -96,11 +100,49 @@ class TestWWARACSVToChirpCSV(unittest.TestCase):
         self.assertEqual(chirp_row['TStep'], '5.00')
         self.assertEqual(chirp_row['Skip'], '')
         self.assertEqual(chirp_row['Power'], '5.0W')
-        self.assertEqual(chirp_row['Comment'], 'Test Comment   Issaquah, WA Issaquah Alps Sponsor: WWARA Link: Yes URL: http://example.com Expiration: 2024-12-31 Lat: 47.6062, Lon: -122.3321 ARESRACES WX DMR Color Code: 1 Fusion DSQ: 123 NXDN Digital NXDN Mixed NXDN RAN: 2 ATV DATV')
+        self.assertEqual(chirp_row['Comment'], 'Test Comment   Issaquah, '
+                                               'WA Issaquah Alps Sponsor: WWARA '
+                                               'Link: Yes URL: https://example.com '
+                                               'Expiration: 2024-12-31 Lat: 47.6062, '
+                                               'Lon: -122.3321 ARESRACES WX DMR '
+                                               'Color Code: 1 Fusion DSQ: 123 NXDN '
+                                               'Digital NXDN Mixed NXDN RAN: 2 ATV '
+                                               'DATV')
         self.assertEqual(chirp_row['URCALL'], '')
         self.assertEqual(chirp_row['RPT1CALL'], '')
         self.assertEqual(chirp_row['RPT2CALL'], '')
         self.assertEqual(chirp_row['DVCODE'], '')
+
+    ## moved to a GitHiub action. See .github/workflows/python-package.yml
+    #
+    # def test_command_line_execution(self):
+    #     input_file = 'sample_files/WWARA-rptrlist-SAMPLE.csv'
+    #     output_file = 'sample_files/test_output.csv'
+    #
+    #     # Print the current working directory for debugging
+    #     print("Current working directory:", os.getcwd())
+    #
+    #     # Run the script using subprocess
+    #     script_path = os.path.abspath(os.path.join(os.path.dirname(__file__),
+    #                                                '../src/wwara_chirp/wwara_chirp.py'))
+    #     result = subprocess.run(
+    #         ['python', script_path, input_file, output_file],
+    #         capture_output=True,
+    #         text=True
+    #     )
+    #
+    #     # Print stdout and stderr for debugging
+    #     print("stdout:", result.stdout)
+    #     print("stderr:", result.stderr)
+    #
+    #     # Check that the script executed successfully
+    #     self.assertEqual(result.returncode, 0)
+    #
+    #     # Check that the output file was created
+    #     self.assertTrue(os.path.exists(output_file))
+    #
+    #     # Clean up the output file
+    #     os.remove(output_file)
 
     if __name__ == '__main__':
         unittest.main()

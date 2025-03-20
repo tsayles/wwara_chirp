@@ -34,80 +34,80 @@ Test Cases:
 """
 
 import unittest
-from chirp_validator import CHIRP_Validator
+from wwara_chirp.chirpvalidator import ChirpValidator
 
 
 class TestCHIRPValidator(unittest.TestCase):
     def test_validate_input_file(self):
-        assert CHIRP_Validator.validate_input_file(
+        assert ChirpValidator.validate_input_file(
             'test_files/valid_input.csv') == True
-        assert CHIRP_Validator.validate_input_file(
+        assert ChirpValidator.validate_input_file(
             'test_files/invalid_input.txt') == True
-        assert CHIRP_Validator.validate_input_file(
+        assert ChirpValidator.validate_input_file(
             'test_files/non_existent_file.csv') == False
 
     def test_validate_output_file(self):
-            assert CHIRP_Validator.validate_output_file(
+            assert ChirpValidator.validate_output_file(
                 'test_files/new_output.csv') == True
-            assert CHIRP_Validator.validate_output_file(
+            assert ChirpValidator.validate_output_file(
                 'test_files/existing_output.csv') == False
 
     def test_validate_location(self):
-        assert CHIRP_Validator.validate_location(100) == True
-        assert CHIRP_Validator.validate_location(-1) == False
-        assert CHIRP_Validator.validate_location(500) == False
+        assert ChirpValidator.validate_location(100) == True
+        assert ChirpValidator.validate_location(-1) == False
+        assert ChirpValidator.validate_location(500) == False
 
     def test_validate_frequency(self):
-        assert CHIRP_Validator.validate_frequency('145.000') == True
-        assert CHIRP_Validator.validate_frequency('abc') == False
-        assert CHIRP_Validator.validate_frequency('2000.000') == False
+        assert ChirpValidator.validate_frequency('145.000') == True
+        assert ChirpValidator.validate_frequency('abc') == False
+        assert ChirpValidator.validate_frequency('2000.000') == False
 
     def test_validate_duplex(self):
-        assert CHIRP_Validator.validate_duplex('+') == True
-        assert CHIRP_Validator.validate_duplex('-') == True
-        assert CHIRP_Validator.validate_duplex('') == True
-        assert CHIRP_Validator.validate_duplex('invalid') == False
+        assert ChirpValidator.validate_duplex('+') == True
+        assert ChirpValidator.validate_duplex('-') == True
+        assert ChirpValidator.validate_duplex('') == True
+        assert ChirpValidator.validate_duplex('invalid') == False
 
     def test_validate_offset(self):
-        assert CHIRP_Validator.validate_offset('0.600') == True
-        assert CHIRP_Validator.validate_offset('') == True
-        assert CHIRP_Validator.validate_offset('abc') == False
-        assert CHIRP_Validator.validate_offset('10000.0') == False
+        assert ChirpValidator.validate_offset('0.600') == True
+        assert ChirpValidator.validate_offset('') == True
+        assert ChirpValidator.validate_offset('abc') == False
+        assert ChirpValidator.validate_offset('10000.0') == False
 
     def test_validate_tone(self):
-        assert CHIRP_Validator.validate_tone('Tone') == True
-        assert CHIRP_Validator.validate_tone('DTCS') == True
-        assert CHIRP_Validator.validate_tone('') == True
-        assert CHIRP_Validator.validate_tone('invalid') == False
+        assert ChirpValidator.validate_tone('Tone') == True
+        assert ChirpValidator.validate_tone('DTCS') == True
+        assert ChirpValidator.validate_tone('') == True
+        assert ChirpValidator.validate_tone('invalid') == False
 
     def test_validate_tone_mode(self):
-        assert CHIRP_Validator.validate_tone_mode('Tone') == True
-        assert CHIRP_Validator.validate_tone_mode('DTCS') == True
-        assert CHIRP_Validator.validate_tone_mode('') == True
-        assert CHIRP_Validator.validate_tone_mode('invalid') == False
+        assert ChirpValidator.validate_tone_mode('Tone') == True
+        assert ChirpValidator.validate_tone_mode('DTCS') == True
+        assert ChirpValidator.validate_tone_mode('') == True
+        assert ChirpValidator.validate_tone_mode('invalid') == False
 
     def test_validate_dtcs_code(self):
-        assert CHIRP_Validator.validate_dtcs_code(23) == True
-        assert CHIRP_Validator.validate_dtcs_code('invalid') == False
+        assert ChirpValidator.validate_dtcs_code(23) == True
+        assert ChirpValidator.validate_dtcs_code('invalid') == False
 
     def test_validate_dtcs_polarity(self):
-        assert CHIRP_Validator.validate_dtcs_polarity('NN') == True
-        assert CHIRP_Validator.validate_dtcs_polarity('NR') == True
-        assert CHIRP_Validator.validate_dtcs_polarity('invalid') == False
+        assert ChirpValidator.validate_dtcs_polarity('NN') == True
+        assert ChirpValidator.validate_dtcs_polarity('NR') == True
+        assert ChirpValidator.validate_dtcs_polarity('invalid') == False
 
     def test_validate_mode(self):
-        assert CHIRP_Validator.validate_mode('FM') == True
-        assert CHIRP_Validator.validate_mode('') == True
-        assert CHIRP_Validator.validate_mode('invalid') == False
+        assert ChirpValidator.validate_mode('FM') == True
+        assert ChirpValidator.validate_mode('') == True
+        assert ChirpValidator.validate_mode('invalid') == False
 
     def test_validate_name(self):
-        assert CHIRP_Validator.validate_name('Repeater') == True
-        assert CHIRP_Validator.validate_name('A' * 17) == False
-        assert CHIRP_Validator.validate_name('Invalid@Name') == False
+        assert ChirpValidator.validate_name('Repeater') == True
+        assert ChirpValidator.validate_name('A' * 17) == False
+        assert ChirpValidator.validate_name('Invalid@Name') == False
 
     def test_validate_comment(self):
-        assert CHIRP_Validator.validate_comment('This is a comment.') == True
-        assert CHIRP_Validator.validate_comment('A' * 256) == False
+        assert ChirpValidator.validate_comment('This is a comment.') == True
+        assert ChirpValidator.validate_comment('A' * 256) == False
 
     def test_validate_row(self):
         chirp_row = {
@@ -122,7 +122,7 @@ class TestCHIRPValidator(unittest.TestCase):
             'Name': 'Repeater',
             'Comment': 'This is a comment.'
         }
-        assert CHIRP_Validator.validate_row(chirp_row) == True
+        assert ChirpValidator.validate_row(chirp_row) == True
 
         invalid_chirp_row = {
             'Location': 500,
@@ -136,7 +136,7 @@ class TestCHIRPValidator(unittest.TestCase):
             'Name': 'A' * 17,
             'Comment': 'A' * 256
         }
-        assert CHIRP_Validator.validate_row(invalid_chirp_row) == False
+        assert ChirpValidator.validate_row(invalid_chirp_row) == False
 
 
 if __name__ == '__main__':

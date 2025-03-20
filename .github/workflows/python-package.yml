@@ -10,7 +10,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -18,37 +18,75 @@ jobs:
         python-version: ["3.10", "3.11", "3.12"]
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4  # Check out the repository
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+
+      uses: actions/setup-python@v5  # Set up the specified Python version
       with:
         python-version: ${{ matrix.python-version }}
+
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
-        python -m pip install flake8 pytest
+        python -m pip install --upgrade pip  # Upgrade pip
+        python -m pip install flake8 pytest  # Install flake8 and pytest
+        # Install dependencies from requirements.txt if it exists
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
     - name: Set PYTHONPATH
-      run: echo "PYTHONPATH=$(pwd)/src:$(pwd)/tests" >> $GITHUB_ENV
+      run: echo "PYTHONPATH=$(pwd)/src:$(pwd)/tests" >> $GITHUB_ENV  # Set the PYTHONPATH environment variable
+
     - name: Lint with flake8
       run: |
-        # stop the build if there are Python syntax errors or undefined names
+        # Stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        # Exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    # This step is for debugging purposes only
     - name: Folder structure debugging
       run: |
-        echo "Python path: $PYTHONPATH"
-        echo "Working directory: $(pwd)"
-        ls -la
+        echo "Python path: $PYTHONPATH"  # Print the PYTHONPATH for debugging
+        echo "Working directory: $(pwd)"  # Print the current working directory
+        ls -la  # List all files in the current directory
         echo "Contents of src and tests directories"
-        ls -la src
-        echo "Contents of src directory"        
-        ls -la tests
+        ls -laR src  # List all files in the src directory
+        ls -la tests  # List all files in the tests directory
+
     - name: Test with pytest
       run: |
-        cd tests
-        echo
-        pytest
+        cd tests  # Change to the tests directory
+        echo  # Print a blank line
+        pytest  # Run the tests
+
+    - name: Test command line execution
+      run: |
+        input_file=tests/test_files/WWARA-rptrlist-TEST.csv
+        output_file=tests/test_files/test_output.csv
+        reference_output_file=tests/test_files/reference_output.csv
+        script_path=wwara_chirp.wwara_chirp
+
+        # Set PYTHONPATH to include the src directory
+        export PYTHONPATH=$(pwd)/src
+        
+        echo "PYTHONPATH=$PYTHONPATH"
+        echo "Working directory: $(pwd)"
+        echo "Input file: $input_file"
+        echo "Output file: $output_file"
+        echo "Script path: $script_path"
+
+        # Run the script as a module
+        python -m $script_path $input_file $output_file
+
+        # Check that the output file was created
+        if [ ! -f $output_file ]; then
+          echo "Output file not created"
+          exit 1
+        fi
+
+        # Check that the output file matches the reference_output_file
+        if ! diff -q $output_file $reference_output_file; then
+          echo "Output file does not match reference output"
+          diff -q $output_file $reference_output_file
+          exit 1
+        fi
+
+        echo "Command line execution test passed"
