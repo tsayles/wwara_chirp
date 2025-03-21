@@ -47,9 +47,8 @@ jobs:
           env:
             TWINE_USERNAME: __token__
           run: |
-            $IsPR = "isPrerelease=" 
-            $IsPR .= ${{ github.event.release.prerelease }}
-            echo $IsPR
+            echo "isPrerelease={ github.event.release.prerelease }" 
+            echo ${{ github.event.release.prerelease }}
             if [[ ${{ github.event.release.prerelease }} == true ]]; then
               echo "This is a pre-release"
 ##              echo "TWINE_PASSWORD=${{ secrets.TEST_PYPI_API_TOKEN }}"
