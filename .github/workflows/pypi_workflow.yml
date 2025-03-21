@@ -56,7 +56,7 @@ jobs:
 #              python -m twine upload --repository testpypi dist/*
             else
               echo "This is a release"
-              echo "Would be Publishing ${{ github.event.release.tag_name }} to PyPI"
+#              echo "Would be Publishing ${{ github.event.release.tag_name }} to PyPI"
 #              python -m twine upload --repository pypi dist/*
             fi
 #
