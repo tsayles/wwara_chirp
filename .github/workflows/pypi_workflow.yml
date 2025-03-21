@@ -50,12 +50,12 @@ jobs:
           run: |
             if [[ ${{ github.event.release.prerelease }} == true ]]; then
               echo "This is a pre-release"
-              echo ${{ secrets.TEST_PYPI_API_TOKEN }} >> $TWINE_PASSWORD
+              echo "TWINE_PASSWORD=${{ secrets.TEST_PYPI_API_TOKEN }}" >> $GITHUB_ENV
               python -m twine upload --repository testpypi dist/*
             else
-                echo "This is a release"
-                echo ${{ secrets.PYPI_API_TOKEN }} >> $TWINE_PASSWORD
-                echo "Would be Publishing ${{ github.event.release.tag_name }} to PyPI"
-#                python -m twine upload --repository pypi dist/*
+              echo "This is a release"
+              echo "TWINE_PASSWORD=${{ secrets.PYPI_API_TOKEN }}" >> $GITHUB_ENV
+              echo "Would be Publishing ${{ github.event.release.tag_name }} to PyPI"
+        #      python -m twine upload --repository pypi dist/*
             fi
 
