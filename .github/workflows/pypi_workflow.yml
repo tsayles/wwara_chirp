@@ -10,6 +10,10 @@ on:
     # This workflow will run when a new release is published
     types: [released, prereleased]
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
 
     test_build_and_publish_to_pypi:
