@@ -47,7 +47,16 @@ jobs:
         - name: Publish to Test PyPI or PyPI
           env:
             TWINE_USERNAME: __token__
-            IsPrerelease: ${{ github.event.release.prerelease == true && 'is prerelease' || 'is not prerelease' }}
+            IsPrerelease: ${{ github.event.release.prerelease == true && 'This is prerelease' || 'This is not prerelease' }}
+            TWINE_PASSWORD: ${{ github.event.release.prerelease == true && secrets.TEST_PYPI_API_TOKEN || secrets.PYPI_API_TOKEN }}
           run: |
             echo $IsPrerelease 
+            if [[ ${{ github.event.release.prerelease }} == true ]]; then
+              echo "This is a pre-release"
+              python -m twine upload --repository testpypi dist/*
+            else
+              echo "This is a release"
+              echo "Would be Publishing ${{ github.event.release.tag_name }} to PyPI"
+#              python -m twine upload --repository pypi dist/*
+            fi
 
