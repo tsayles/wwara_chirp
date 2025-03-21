@@ -44,8 +44,8 @@ jobs:
           run: |
             python -m build
 
-        - name: Publish to Test PyPI or PyPI
-          id: publish
+        - name: Set twine env
+          id: setenv
           env:
             TWINE_USERNAME: __token__
             IsPrerelease: ${{ github.event.release.prerelease == true && 'This is prerelease' || 'This is not prerelease' }}
@@ -53,12 +53,16 @@ jobs:
           run: |
             echo $IsPrerelease
             echo ${{ github.event.release.prerelease }}
-            
-            if [[ ${{ github.event.release.prerelease }} == true ]]; then
-              echo "This is a pre-release"
-#              echo "::set-output name=is_prerelease::true"
-            else
-              echo "This is a release"
-#              echo "::set-output name=is_prerelease::false"
-            fi
-#
+
+        - name: Publish to Test PyPI or PyPI
+          id: publish
+          run: |
+              if [[ ${{ github.event.release.prerelease }} == true ]]; then
+                echo "This is a pre-release"
+                python -m twine upload --repository testpypi dist/*
+              else
+                echo "This is a release"
+                echo "Would be Publishing ${{ github.event.release.tag_name }} to PyPI"
+#                python -m twine upload --repository pypi dist/*
+              fi
+
