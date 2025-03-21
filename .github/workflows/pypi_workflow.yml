@@ -55,7 +55,7 @@ jobs:
             echo ${{ github.event.release.prerelease }}
 
         - name: Check if the release is a pre-release
-          id: check_prerelease
+          id: publish_to_pypi
           run: |
             echo ${{ github.event.release.prerelease }}
             echo ${{ github.event.release.isPrerelease }}
