@@ -8,7 +8,7 @@ name: PyPI workflow
 on:
   release:
     # This workflow will run when a new release is published
-    types: [published, prereleased]
+    types: [released, prereleased]
 
 jobs:
 
@@ -45,7 +45,7 @@ jobs:
             python -m build
 
         - name: Publish to Test PyPI
-          if: github.event.release.prerelease == 'true'
+          if: github.event.release.isPrerelease == 'true'
           env:
             TWINE_USERNAME: __token__
             TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
@@ -53,10 +53,11 @@ jobs:
             python -m twine upload --repository testpypi dist/*
 
         - name: Publish to PyPI
-          if: github.event.release.prerelease != 'true'
+          if: github.event.release.isPrerelease != 'true'
           env:
             TWINE_USERNAME: __token__
             TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
           run: |
-            python -m twine upload --repository pypi dist/*
+            echo "Would be Publishing ${{ github.event.release.tag_name }} to PyPI"
+#            python -m twine upload --repository pypi dist/*
                     
