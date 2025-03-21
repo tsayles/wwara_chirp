@@ -29,7 +29,7 @@ To use the updated WWARA CHIRP export script, follow these steps:
 1. Use pip to install from the PyPi repository:
    * `pip install wwara_chirp`
 2. Or clone this repository and run the script locally:
-   * `git clone https://github.com/tsayles/wwara-chirp.git`
+   * `git clone https://github.com/tsayles/wwara_chirp.git`
 
 ### Setting the PYTHONPATH
 If you cloned the repository, set the `PYTHONPATH` to include the `src` 
