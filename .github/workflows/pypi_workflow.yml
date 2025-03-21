@@ -44,6 +44,21 @@ jobs:
           run: |
             python -m build
 
+        - name: Check if the release is a pre-release
+          id: check_prerelease
+          run: |
+            echo ${{ github.event.release.prerelease }}
+            echo ${{ github.event.release.isPrerelease }}
+            
+            if [[ ${{ github.event.release.prerelease }} == true ]]; then
+              echo "This is a pre-release"
+              echo "::set-output name=is_prerelease::true"
+            else
+              echo "This is a release"
+              echo "::set-output name=is_prerelease::false"
+            fi
+            
+
         - name: Publish to Test PyPI
           if: github.event.release.isPrerelease == 'true'
           env:
