@@ -44,35 +44,18 @@ jobs:
           run: |
             python -m build
 
-        - name: Check if the release is a pre-release
-          id: check_prerelease
+        - name: Publish to Test PyPI or PyPI
+          env:
+            TWINE_USERNAME: __token__
           run: |
-            echo ${{ github.event.release.prerelease }}
-            echo ${{ github.event.release.isPrerelease }}
-            
             if [[ ${{ github.event.release.prerelease }} == true ]]; then
               echo "This is a pre-release"
-              echo "::set-output name=is_prerelease::true"
+              echo ${{ secrets.TEST_PYPI_API_TOKEN }} >> $TWINE_PASSWORD
+              python -m twine upload --repository testpypi dist/*
             else
-              echo "This is a release"
-              echo "::set-output name=is_prerelease::false"
+                echo "This is a release"
+                echo ${{ secrets.PYPI_API_TOKEN }} >> $TWINE_PASSWORD
+                echo "Would be Publishing ${{ github.event.release.tag_name }} to PyPI"
+#                python -m twine upload --repository pypi dist/*
             fi
-            
 
-        - name: Publish to Test PyPI
-          if: github.event.release.isPrerelease == 'true'
-          env:
-            TWINE_USERNAME: __token__
-            TWINE_PASSWORD: ${{ secrets.TEST_PYPI_API_TOKEN }}
-          run: |
-            python -m twine upload --repository testpypi dist/*
-
-        - name: Publish to PyPI
-          if: github.event.release.isPrerelease != 'true'
-          env:
-            TWINE_USERNAME: __token__
-            TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
-          run: |
-            echo "Would be Publishing ${{ github.event.release.tag_name }} to PyPI"
-#            python -m twine upload --repository pypi dist/*
-                    
