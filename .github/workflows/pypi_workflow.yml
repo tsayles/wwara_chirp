@@ -1,5 +1,7 @@
 # GitHub / PyPI integration
 #
+# This workflow will build a Python package, publish it to Test PyPI for pre-releases,
+# and publish it to PyPI for releases.
 
 name: PyPI workflow
 
