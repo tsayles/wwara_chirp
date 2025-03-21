@@ -43,12 +43,14 @@ jobs:
         - name: Build
           run: |
             python -m build
+
         - name: Publish to Test PyPI or PyPI
           env:
             TWINE_USERNAME: __token__
           run: |
-            echo "isPrerelease={ github.event.release.prerelease }" 
+            echo "IS_PRERELEASE=${{ github.event.release.prerelease }}}" 
             echo ${{ github.event.release.prerelease }}
+            echo $IS_PRERELEASE
             if [[ ${{ github.event.release.prerelease }} == true ]]; then
               echo "This is a pre-release"
 ##              echo "TWINE_PASSWORD=${{ secrets.TEST_PYPI_API_TOKEN }}"
