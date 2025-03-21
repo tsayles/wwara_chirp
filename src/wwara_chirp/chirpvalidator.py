@@ -15,7 +15,7 @@ from chirp.chirp_common import TONES, DTCS_CODES, MODES
 
 log = logging.getLogger(__name__)
 
-class CHIRP_Validator:
+class ChirpValidator:
     channel_min = 0
     channel_max = 499
     frequency_min = 10
@@ -39,7 +39,7 @@ class CHIRP_Validator:
 
     @staticmethod
     def validate_location(location):
-        if location < CHIRP_Validator.channel_min or location > CHIRP_Validator.channel_max:
+        if location < ChirpValidator.channel_min or location > ChirpValidator.channel_max:
             log.error(f'Invalid memory location: {location}')
             return False
         return True
@@ -53,7 +53,7 @@ class CHIRP_Validator:
             log.error(f'Invalid frequency: {frequency}')
             return False
         frequency_num = float(frequency)
-        if frequency_num < CHIRP_Validator.frequency_min or frequency_num > CHIRP_Validator.frequency_max:
+        if frequency_num < ChirpValidator.frequency_min or frequency_num > ChirpValidator.frequency_max:
             log.error(f'Invalid frequency: {frequency}')
             return False
         return True
@@ -79,7 +79,7 @@ class CHIRP_Validator:
             return False
 
         offset_num = float(offset)
-        if offset_num < CHIRP_Validator.offset_min or offset_num > CHIRP_Validator.offset_max:
+        if offset_num < ChirpValidator.offset_min or offset_num > ChirpValidator.offset_max:
             log.error(f'Invalid offset: {offset}')
             return False
         return True
@@ -138,26 +138,26 @@ class CHIRP_Validator:
 
     @staticmethod
     def validate_row(chirp_row):
-        if not CHIRP_Validator.validate_location(chirp_row['Location']):
+        if not ChirpValidator.validate_location(chirp_row['Location']):
             return False
-        if not CHIRP_Validator.validate_frequency(chirp_row['Frequency']):
+        if not ChirpValidator.validate_frequency(chirp_row['Frequency']):
             return False
-        if not CHIRP_Validator.validate_duplex(chirp_row['Duplex']):
+        if not ChirpValidator.validate_duplex(chirp_row['Duplex']):
             return False
         if chirp_row['Duplex'] != '':
-            if not CHIRP_Validator.validate_offset(chirp_row['Offset']):
+            if not ChirpValidator.validate_offset(chirp_row['Offset']):
                 return False
-        if not CHIRP_Validator.validate_tone(chirp_row['Tone']):
+        if not ChirpValidator.validate_tone(chirp_row['Tone']):
             return False
         if chirp_row['Tone'] == 'DTCS':
-            if not CHIRP_Validator.validate_dtcs_code(chirp_row['DTCS Code']):
+            if not ChirpValidator.validate_dtcs_code(chirp_row['DTCS Code']):
                 return False
-            if not CHIRP_Validator.validate_dtcs_polarity(chirp_row['DTCS Polarity']):
+            if not ChirpValidator.validate_dtcs_polarity(chirp_row['DTCS Polarity']):
                 return False
-        if not CHIRP_Validator.validate_mode(chirp_row['Mode']):
+        if not ChirpValidator.validate_mode(chirp_row['Mode']):
             return False
-        if not CHIRP_Validator.validate_name(chirp_row['Name']):
+        if not ChirpValidator.validate_name(chirp_row['Name']):
             return False
-        if not CHIRP_Validator.validate_comment(chirp_row['Comment']):
+        if not ChirpValidator.validate_comment(chirp_row['Comment']):
             return False
         return True

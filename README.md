@@ -26,15 +26,23 @@ supported radios without the schema-related errors encountered with XML.
 
 ## Installation
 To use the updated WWARA CHIRP export script, follow these steps:
-1. use pip to install from the PyPi repository:
-* `pip install wwara-chirp-export`
-3. or clone this repository and run the script locally.
-*`git clone https://guthub.com/tsayles/wwara-chirp-export.git`
+1. Use pip to install from the PyPi repository:
+   * `pip install wwara_chirp`
+2. Or clone this repository and run the script locally:
+   * `git clone https://github.com/tsayles/wwara_chirp.git`
+
+### Setting the PYTHONPATH
+If you cloned the repository, set the `PYTHONPATH` to include the `src` 
+and `tests` directories:
+
+```bash
+export PYTHONPATH=$(pwd)/src:$(pwd)/tests:$PYTHONPATH
+```
 
 ## Usage
 To export WWARA repeater data for CHIRP programming, run the script with the
 following command:
-* `python3 -m wwara-chirp.py <input_file> <output_file>`
+* `python3 -m wwara_chirp <input_file> <output_file>`
 
 * `<input_file>` is the CSV file containing WWARA repeater data and
 * `<output_file>` is the CSV file to be generated for CHIRP import. (Be sure 
@@ -58,7 +66,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Contact
 
-This project is maintained by Tom Sayles, KE4HET on a volunteer and as time 
+This project is maintained by Tom Sayles (KE4HET) on a volunteer and as time 
 allows basis.
 
 For questions, please reach out to the maintainers or open an issue on this 
