@@ -57,6 +57,13 @@ jobs:
           run: |
             echo $IsPrerelease
             echo ${{ github.event.release.prerelease }}
+            echo "TWINE_PASSWORD hash ="
+            echo -n $TWINE_PASSWORD | sha256sum
+            echo "TEST_PYPI_API_TOKEN hash ="
+            echo -n ${{ secrets.TEST_PYPI_API_TOKEN }} | sha256sum
+            echo "PYPI_API_TOKEN hash ="
+            echo -n ${{ secrets.PYPI_API_TOKEN }} | sha256sum
+            
 
         - name: Publish to PyPI
           id: publish_to_pypi
@@ -65,7 +72,7 @@ jobs:
             echo ${{ github.event.release.isPrerelease }}
             
             if [[ ${{ github.event.release.prerelease }} == true ]]; then
-              echo "This is a pre-release"
+              echo "This is a pre-release. Publishing to Test PyPI with $TWINE_PASSWORD"
               python -m twine upload --repository testpypi dist/*
             else
               echo "This is a release"
