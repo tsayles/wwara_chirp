@@ -54,15 +54,16 @@ jobs:
             echo $IsPrerelease
             echo ${{ github.event.release.prerelease }}
 
-        - name: Publish to Test PyPI or PyPI
-          id: publish
+        - name: Check if the release is a pre-release
+          id: check_prerelease
           run: |
-              if [[ ${{ github.event.release.prerelease }} == true ]]; then
-                echo "This is a pre-release"
-                python -m twine upload --repository testpypi dist/*
-              else
-                echo "This is a release"
-                echo "Would be Publishing ${{ github.event.release.tag_name }} to PyPI"
-#                python -m twine upload --repository pypi dist/*
-              fi
-
+            echo ${{ github.event.release.prerelease }}
+            echo ${{ github.event.release.isPrerelease }}
+            
+            if [[ ${{ github.event.release.prerelease }} == true ]]; then
+              echo "This is a pre-release"
+              echo "::set-output name=is_prerelease::true"
+            else
+              echo "This is a release"
+              echo "::set-output name=is_prerelease::false"
+            fi
