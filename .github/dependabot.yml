@@ -3,7 +3,6 @@ version: 2  # Specify the version of the Dependabot configuration
 
 updates:
   # Configuration for GitHub Actions dependencies
-    # Specify the ecosystem for GitHub Actions
   - package-ecosystem: "github-actions"  # Specify the ecosystem for GitHub Actions
     directory: "/"  # Root directory of the repository
     schedule:
@@ -14,6 +13,10 @@ updates:
         versions: ["2.x"]
       - dependency-name: "actions/setup-python"  # Ignore specific versions of actions/setup-python
         versions: ["2.x", "3.x", "4.x"]
+    # Add push event trigger
+    push:
+      branches:
+        - dev  # Run on push to dev branch
 
   # Configuration for GitHub Actions dependencies for the master branch
   # Specify the ecosystem for GitHub Actions
