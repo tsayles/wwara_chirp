@@ -27,10 +27,16 @@ jobs:
 
         - name: Install dependencies
           run: |
-            python -m venv venv
-            source venv/bin/activate
-            python -m pip install --upgrade pip
-            pip install -r requirements.txt
+            python -m pip install --upgrade pip  # Upgrade pip
+            
+            python -m pip install flake8 pytest pandas numpy  # Install flake8, pytest, pandas, and numpy
+            
+            # Install chirp from the same location as called out in the pyproject.toml file
+            python -m pip install "chirp @ git+https://github.com/kk7ds/chirp.git@master"  
+            
+            # Install dependencies from pyproject.toml
+            pip install poetry
+            poetry install
 
         - name: Set PYTHONPATH
           run: echo "PYTHONPATH=$(pwd)/src:$(pwd)/tests" >> $GITHUB_ENV
