@@ -33,11 +33,7 @@ jobs:
       # Install the package in the virtual environment from the newly built wheel file
       run: |
         source venv/bin/activate
-
-#   Since the package is not published to PyPI, install the package from the
-#   GitHub repository which should install the chirp dependencies from the
-#   kk7ds/chirp repository
-        pip install git+https://github.com/tsayles/wwara_chirp.git
+        pip install dist/*.whl
 
     - name: Test CLI tool
       run: |
