@@ -308,11 +308,11 @@ def process_row(wwara_row):
 
     return chirp_row
 
-def write_output_file(output_file, chirp_table):
-    chirp_table.to_csv(output_file, index=False)
+def write_output_file(output_file, chirp_table_out):
+    chirp_table_out.to_csv(output_file, index=False)
 
     log.info(f'Output file written: {output_file}')
-    log.info(f'Number of memory channels written: {len(chirp_table)}')
+    log.info(f'Number of memory channels written: {len(chirp_table_out)}')
 
 def process_file(input_file, output_file):
     log.debug('Script started')
@@ -320,6 +320,11 @@ def process_file(input_file, output_file):
     log.debug(f'Output file: {output_file}')
 
     global chirp_table
+    global channel
+
+    # Initialize the channel number
+    channel = 0
+    chirp_table = pd.DataFrame()
 
     validator = ChirpValidator()
 
