@@ -62,7 +62,7 @@ jobs:
       run: |
         source venv/bin/activate
         wwara_chirp --help > help_output.txt
-        if ! grep -q "Usage: wwara_chirp" help_output.txt; then
+        if ! grep -q "WWARA CHIRP Export Script Update" help_output.txt; then
           echo "CLI tool help flag test failed"
           exit 1
         fi
