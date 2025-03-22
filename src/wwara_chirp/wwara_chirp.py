@@ -25,11 +25,11 @@ import re
 import sys
 from contextlib import nullcontext
 from logging.handlers import RotatingFileHandler
-
 import pandas as pd
+
 from chirp.chirp_common import TONES, DTCS_CODES, MODES
 
-# from .chirpvalidator import ChirpValidator
+from wwara_chirp.version import __version__
 from wwara_chirp.chirpvalidator import ChirpValidator
 
 # Set up the CSV file paths
@@ -357,6 +357,8 @@ def main():
     parser = argparse.ArgumentParser(description='WWARA CHIRP Export Script Update')
     parser.add_argument('input_file', help='Path to the input CSV file')
     parser.add_argument('output_file', help='Path to the output CSV file')
+    parser.add_argument('--version', action='version',
+                        version=f'WWARA CHIRP Export Script {__version__}')
     args = parser.parse_args()
 
     process_file(args.input_file, args.output_file)
