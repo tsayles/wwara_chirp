@@ -25,11 +25,11 @@ import re
 import sys
 from contextlib import nullcontext
 from logging.handlers import RotatingFileHandler
-
 import pandas as pd
+
 from chirp.chirp_common import TONES, DTCS_CODES, MODES
 
-# from .chirpvalidator import ChirpValidator
+from wwara_chirp.version import __version__
 from wwara_chirp.chirpvalidator import ChirpValidator
 
 # Set up the CSV file paths
@@ -308,36 +308,23 @@ def process_row(wwara_row):
 
     return chirp_row
 
-def write_output_file(output_file, chirp_table):
-    chirp_table.to_csv(output_file, index=False)
+def write_output_file(output_file, chirp_table_out):
+    chirp_table_out.to_csv(output_file, index=False)
 
     log.info(f'Output file written: {output_file}')
-    log.info(f'Number of memory channels written: {len(chirp_table)}')
+    log.info(f'Number of memory channels written: {len(chirp_table_out)}')
 
-def main(input_file, output_file):
-    log.info('WWARA CHIRP Export Script Update')
-
-    if input_file is None and output_file is None:
-        log.info('Using command line or default input and output files')
-
-        parser = argparse.ArgumentParser(description='WWARA CHIRP Export Script Update')
-        parser.add_argument('input_file', help='Path to the input CSV file')
-        parser.add_argument('output_file', help='Path to the output CSV file')
-        args = parser.parse_args()
-
-        if not args.input_file:
-            args.input_file = INPUT_FILE
-        if not args.output_file:
-            args.output_file = OUTPUT_FILE
-
-        input_file = args.input_file
-        output_file = args.output_file
-
+def process_file(input_file, output_file):
     log.debug('Script started')
-    log.debug(f'Input file: {INPUT_FILE}')
-    log.debug(f'Output file: {OUTPUT_FILE}')
+    log.debug(f'Input file: {input_file}')
+    log.debug(f'Output file: {output_file}')
 
     global chirp_table
+    global channel
+
+    # Initialize the channel number
+    channel = 0
+    chirp_table = pd.DataFrame()
 
     validator = ChirpValidator()
 
@@ -347,10 +334,7 @@ def main(input_file, output_file):
         sys.exit(1)
 
     log.debug(f'Reading input file: {input_file}')
-    # Read the input file, skipping the first row.
-    # The second row contains the column names.
     df = pd.read_csv(input_file, skiprows=[0])
-
     log.debug(f'Number of memory channels read: {len(df)}')
 
     for index, wwara_row in df.iterrows():
@@ -365,13 +349,19 @@ def main(input_file, output_file):
         if chirp_table.empty:
             chirp_table = chirp_row_to_frame
         else:
-            chirp_table = pd.concat([chirp_table, chirp_row_to_frame],
-                                ignore_index=True)
-
+            chirp_table = pd.concat([chirp_table, chirp_row_to_frame], ignore_index=True)
 
     write_output_file(output_file, chirp_table)
 
+def main():
+    parser = argparse.ArgumentParser(description='WWARA CHIRP Export Script Update')
+    parser.add_argument('input_file', help='Path to the input CSV file')
+    parser.add_argument('output_file', help='Path to the output CSV file')
+    parser.add_argument('--version', action='version',
+                        version=f'WWARA CHIRP Export Script {__version__}')
+    args = parser.parse_args()
+
+    process_file(args.input_file, args.output_file)
 
 if __name__ == '__main__':
-
-    main(None, None)
+    main()

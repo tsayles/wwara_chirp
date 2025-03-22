@@ -26,32 +26,46 @@ supported radios without the schema-related errors encountered with XML.
 
 ## Installation
 To use the updated WWARA CHIRP export script, follow these steps:
-1. Use pip to install from the PyPi repository:
-   * `pip install wwara_chirp`
-2. Or clone this repository and run the script locally:
-   * `git clone https://github.com/tsayles/wwara_chirp.git`
 
-### Setting the PYTHONPATH
-If you cloned the repository, set the `PYTHONPATH` to include the `src` 
-and `tests` directories:
+1. Clone this repository:
+   ```bash
+   git clone https://github.com/tsayles/wwara_chirp.git
+   cd wwara_chirp
+   ```
 
-```bash
-export PYTHONPATH=$(pwd)/src:$(pwd)/tests:$PYTHONPATH
-```
+2. Create and activate a virtual environment:
+   ```bash
+   python -m venv venv
+   source venv/bin/activate
+   ```
+
+3. Upgrade `pip` and install the required packages:
+   ```bash
+   python -m pip install --upgrade pip
+   python -m pip install build
+   python -m build
+   ```
+
+4. Install the package from the newly built wheel file:
+   ```bash
+   pip install dist/*.whl
+   ```
+
 
 ## Usage
 To export WWARA repeater data for CHIRP programming, run the script with the
 following command:
-* `python3 -m wwara_chirp <input_file> <output_file>`
+* `wwara_chirp <input_file> <output_file>`
 
 * `<input_file>` is the CSV file containing WWARA repeater data and
-* `<output_file>` is the CSV file to be generated for CHIRP import. (Be sure 
-  the output_file does not exist.)
+* `<output_file>` is the CSV file to be generated for CHIRP import. (Be sure the
+  output_file does not exist.)
   
-The script will read the daily WWARA input file, convert the data to CHIRP 
-format, and write the output file in CSV format for CHIRP import. The output 
-file should  be imported to a new CHIRP channel list, and specific entries can
-be copy and pasted to the desired radio memory channels of the user's radio file.
+The script is intended to read the daily WWARA input file, convert the data to
+CHIRP format, and write the output file in CSV format for CHIRP import. The
+output file should be imported to a new CHIRP channel list, and specific entries
+can be copy and pasted to the desired radio memory channels of the user's radio
+file.
 
 
 ## Future Plans

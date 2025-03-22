@@ -1,6 +1,3 @@
-# This workflow will install Python dependencies, run tests and lint with a
-    # variety of Python versions
-
 name: Python package
 
 on:
@@ -15,12 +12,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.10", "3.11", "3.12"]
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
 
     steps:
     - uses: actions/checkout@v4  # Check out the repository
     - name: Set up Python ${{ matrix.python-version }}
-
       uses: actions/setup-python@v5  # Set up the specified Python version
       with:
         python-version: ${{ matrix.python-version }}
@@ -28,9 +24,15 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip  # Upgrade pip
-        python -m pip install flake8 pytest  # Install flake8 and pytest
-        # Install dependencies from requirements.txt if it exists
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        
+        python -m pip install flake8 pytest pandas numpy  # Install flake8, pytest, pandas, and numpy
+        
+        # Install chirp from the same location as called out in the pyproject.toml file
+        python -m pip install "chirp @ git+https://github.com/kk7ds/chirp.git@master"  
+        
+        # Install dependencies from pyproject.toml
+        pip install poetry
+        poetry install
 
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=$(pwd)/src:$(pwd)/tests" >> $GITHUB_ENV  # Set the PYTHONPATH environment variable
@@ -66,7 +68,7 @@ jobs:
 
         # Set PYTHONPATH to include the src directory
         export PYTHONPATH=$(pwd)/src
-        
+
         echo "PYTHONPATH=$PYTHONPATH"
         echo "Working directory: $(pwd)"
         echo "Input file: $input_file"
