@@ -20,6 +20,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12"
 ]
+requires-python = ">=3.10"
 
 dependencies = [
     "setuptools>=59.6,<77.1",
@@ -28,15 +29,7 @@ dependencies = [
     "chirp @ git+https://github.com/kk7ds/chirp.git@master"
 ]
 
-[project.optional-dependencies]
-test = [
-    "pytest>=6.0",
-    "pandas",
-    "numpy"
-]
-
 keywords = ["WWARA", "CHIRP"]
-requires-python = ">=3.10"
 
 [project.urls]
 "Bug Reports" = "https://github.com/tsayles/wwara-chirp/issues"
@@ -50,3 +43,10 @@ where = ["src"]
 
 [project.scripts]
 wwara_chirp = "wwara_chirp:main"
+
+[project.optional-dependencies]
+test = [
+    "pytest>=6.0",
+    "pandas",
+    "numpy"
+]
