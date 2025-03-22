@@ -21,6 +21,14 @@ classifiers = [
     "Programming Language :: Python :: 3.12"
 ]
 
+dependencies = [
+    "setuptools>=59.6,<77.1",
+    "pandas~=2.2.3",
+    "numpy~=2.2.4",
+    "chirp @ git+https://github.com/kk7ds/chirp.git@master"
+]
+
+
 keywords = ["WWARA", "CHIRP"]
 requires-python = ">=3.10"
 
