@@ -84,7 +84,7 @@ jobs:
             
             if [[ ${{ github.event.release.prerelease }} == true ]]; then
               echo "This is a pre-release. Publishing to Test PyPI with $TWINE_PASSWORD"
-              python -m twine upload --repository testpypi dist/*
+              python -m twine upload --verbose --repository testpypi dist/*
             else
               echo "This is a release"
               echo "Would be Publishing ${{ github.event.release.tag_name }} to PyPI"
