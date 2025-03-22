@@ -27,7 +27,8 @@ supported radios without the schema-related errors encountered with XML.
 ## Installation
 To use the updated WWARA CHIRP export script, follow these steps:
 1. Use pip to install from the PyPi repository:
-   * `pip install wwara_chirp`
+   ~~* `pip install wwara_chirp`~~
+   * 'pip install git+https://github.com/tsayles/wwara_chirp.git'
 2. Or clone this repository and run the script locally:
    * `git clone https://github.com/tsayles/wwara_chirp.git`
 
