@@ -28,6 +28,12 @@ dependencies = [
     "chirp @ git+https://github.com/kk7ds/chirp.git@master"
 ]
 
+[project.optional-dependencies]
+test = [
+    "pytest>=6.0",
+    "pandas",
+    "numpy"
+]
 
 keywords = ["WWARA", "CHIRP"]
 requires-python = ">=3.10"

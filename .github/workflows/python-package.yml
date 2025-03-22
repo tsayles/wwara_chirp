@@ -30,7 +30,13 @@ jobs:
         python -m pip install --upgrade pip  # Upgrade pip
         python -m pip install flake8 pytest  # Install flake8 and pytest
         # Install dependencies from requirements.txt if it exists
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; 
+        
+        # Otherwise install dependencies from pyproject.toml
+        elif [ -f pyproject.toml ]; then pip install poetry; poetry install;
+        
+        fi
+        
 
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=$(pwd)/src:$(pwd)/tests" >> $GITHUB_ENV  # Set the PYTHONPATH environment variable
