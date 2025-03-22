@@ -6,8 +6,9 @@
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
       <excludeFolder url="file://$MODULE_DIR$/sample_files/DataBaseExtract" />
+      <excludeFolder url="file://$MODULE_DIR$/.venv2" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.12 (wwara_chirp)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.12 (wwara_chirp) (2)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
