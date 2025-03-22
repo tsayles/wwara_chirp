@@ -35,4 +35,4 @@ build-backend = "setuptools.build_meta"
 where = ["src"]
 
 [project.scripts]
-wwara-chirp = "wwara_chirp:main"
+wwara_chirp = "wwara_chirp:main"
