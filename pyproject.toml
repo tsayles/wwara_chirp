@@ -3,7 +3,7 @@ name = "wwara-chirp"
 version = "2.0.3"
 description = "WWARA CHIRP Export Script Update"
 readme = "README.md"
-license = { text = "MIT" }
+license = { text = "GPL-3.0", file = "LICENSE" }
 authors = [
     { name = "Tom Sayles (KE4HET)", email = "tsayles@Soot-n-Smoke.com" }
 ]
