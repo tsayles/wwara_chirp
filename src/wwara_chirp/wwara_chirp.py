@@ -27,10 +27,14 @@ from contextlib import nullcontext
 from logging.handlers import RotatingFileHandler
 import pandas as pd
 
-from chirp.chirp_common import TONES, DTCS_CODES, MODES
-
 from wwara_chirp.version import __version__
 from wwara_chirp.chirpvalidator import ChirpValidator
+
+from wwara_chirp.mock_chirp import MockChirp
+
+TONES = MockChirp.TONES
+DTCS_CODES = MockChirp.DTCS_CODES
+MODES = MockChirp.MODES
 
 # Set up the CSV file paths
 INPUT_FILE = '../../sample_files/WWARA-rptrlist-SAMPLE.csv'
