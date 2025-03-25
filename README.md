@@ -8,9 +8,18 @@ data to a format suitable for direct import into CHIRP.
 
 ## Overview
 This repository contains an updated CHIRP export script for the Western
-Washington Amateur Relay Association (WWARA). This update addresses a
-longstanding format change for CHIRP import files, moving away from XML in favor
-of CSV due to improved compatibility and reliability.
+Washington Amateur Relay Association ([WWARA](https://www.wwara.org/)). 
+
+WWARA maintains a database of coordinated repeaters west of the Cascade
+Mountains in Washington State, between the Canadian border and the Oregon
+borders. WWARA publishes a nightly extract of their database in various CSV 
+variations. 
+
+This script is intended to be used with the WWARA-rptrlist-DATE.csv file. The 
+v2.x.x updates address a longstanding format change for CHIRP import files, 
+moving away from XML in favor of CSV due to improved compatibility and 
+reliability. These updates also implement a modern Python packaging structure
+to facilitate installation, especially managing dependencies.
 
 ## Background
 CHIRP, an open-source tool for programming amateur radios, initially supported
@@ -76,7 +85,17 @@ encouraged, as the goal is to provide a reliable and user-friendly tool for
 WWARA members and other amateur radio operators.
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is now licensed under the GPL-3.0 License to allow the reuse of
+code from the code from the [chirp project](https://github.com/kk7ds/chirp),
+which is also licensed under GPL-3.0. This change ensures compatibility and
+compliance with the licensing terms of the chirp project.
+
+If the chirp project is ever published to PyPi under a more permissive license,
+such as the MIT License, we can consider switching back to the MIT License for
+this project. This would allow for greater flexibility and ease of use for
+contributors and users.
+
+For more details, see the LICENSE.txt file in this repository.
 
 ## Contact
 
