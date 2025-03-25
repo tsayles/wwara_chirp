@@ -11,7 +11,12 @@ The purpose of this class is to validate various fields and data structures used
 import os
 import re
 import logging
-from chirp.chirp_common import TONES, DTCS_CODES, MODES
+
+from wwara_chirp.mock_chirp import MockChirp
+
+TONES = MockChirp.TONES
+DTCS_CODES = MockChirp.DTCS_CODES
+MODES = MockChirp.MODES
 
 log = logging.getLogger(__name__)
 
