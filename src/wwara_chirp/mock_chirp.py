@@ -3,7 +3,6 @@
 # the kk7ds/chirp project.
 
 import difflib
-import requests
 
 class MockChirp(object):
     def __init__(self):
