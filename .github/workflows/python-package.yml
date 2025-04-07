@@ -33,6 +33,7 @@ jobs:
         # Install dependencies from pyproject.toml
         pip install poetry
         poetry install
+        pip list  # List installed packages for debugging
 
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=$(pwd)/src:$(pwd)/tests" >> $GITHUB_ENV  # Set the PYTHONPATH environment variable

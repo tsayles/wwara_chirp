@@ -51,7 +51,7 @@ where = ["src"]
 [tool.poetry.dependencies]
 python = ">=3.10,<4"
 requests = "^2.26.0"
-PyGithub = "^1.55"
+PyGithub = "^2.6.0"
 setuptools = ">=59.6,<77.1"
 pandas = "~2.2.3"
 numpy = "~2.2.4"
