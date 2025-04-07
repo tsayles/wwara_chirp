@@ -27,13 +27,11 @@ jobs:
         
         python -m pip install flake8 pytest pandas numpy  # Install flake8, pytest, pandas, and numpy
         
-#        # Install chirp from the same location as called out in the pyproject.toml file
-#        python -m pip install "chirp @ git+https://github.com/kk7ds/chirp.git@master"
-        
         # Install dependencies from pyproject.toml
         pip install poetry
         poetry install
-        pip install pyGitHub  # Install pyGitHub for GitHub API access
+        
+        pip install PyGithub  # Install PyGithub for GitHub API access
         
         pip list  # List installed packages for debugging
 
