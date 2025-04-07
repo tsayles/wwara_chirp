@@ -24,7 +24,10 @@ requires-python = ">=3.10,<4" # <4 is a pass through from chirp
 dependencies = [
     "setuptools>=59.6,<77.1",
     "pandas~=2.2.3",
-    "numpy~=2.2.4"
+    "numpy~=2.2.4",
+    "requests>=2.26.0",
+    "PyGithub>=1.55.0"
+
 ]
 
 keywords = ["WWARA", "CHIRP"]
@@ -51,7 +54,7 @@ where = ["src"]
 [tool.poetry.dependencies]
 python = ">=3.10,<4"
 requests = "^2.26.0"
-PyGithub = "^2.6.0"
+PyGithub = "^1.55.0"
 setuptools = ">=59.6,<77.1"
 pandas = "~2.2.3"
 numpy = "~2.2.4"
