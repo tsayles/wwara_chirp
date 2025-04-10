@@ -1,10 +1,8 @@
 # WWARA CHIRP Export Script Update
 
-This is a beta release of the WWARA CHIRP export script. 
-A new version of the WWARA CHIRP export script has been developed to address 
-the CHIRP file format change from XML to CSV. The updated script provides a 
-(hopefully) more reliable and user-friendly way to convert WWARA repeater 
-data to a format suitable for direct import into CHIRP.
+### **Note: This is a work in progress. The script is mostly functional, and the documentation is aspirational.** 
+Please report any issues or bugs you encounter, and feel free to contribute to the
+documentation or code.
 
 ## Overview
 This repository contains an updated CHIRP export script for the Western
@@ -37,32 +35,21 @@ supported radios without the schema-related errors encountered with XML.
 wwara_chirp is tested on python 3.10, 3.11, 3.12, and 3.13
 
 ## Installation
-To use the updated WWARA CHIRP export script, follow these steps:
+To install the package, you can use pip to install the package from PyPI for 
+the latest stable release. 
+    ```bash
+    pip install -i wwara-chirp
+    ```    
+or from the test PyPI for the latest pre-release version.
 
-1. Clone this repository:
    ```bash
-   git clone https://github.com/tsayles/wwara_chirp.git
-   cd wwara_chirp
-   ```
+   pip install -i https://test.pypi.org/simple/ wwara-chirp
+   ```  
 
-2. Create and activate a virtual environment:
-   ```bash
-   python -m venv venv
-   source venv/bin/activate
-   ```
-
-3. Upgrade `pip` and install the required packages:
-   ```bash
-   python -m pip install --upgrade pip
-   python -m pip install build
-   python -m build
-   ```
-
-4. Install the package from the newly built wheel file:
-   ```bash
-   pip install dist/*.whl
-   ```
-
+you can also upgrade the package to the latest stable version.
+    ```bash
+    pip install -i --upgrade wwara-chirp
+    ```
 
 ## Usage
 To export WWARA repeater data for CHIRP programming, run the script with the
