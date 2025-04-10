@@ -46,7 +46,13 @@ jobs:
         input_file=tests/test_files/WWARA-rptrlist-TEST.csv
         output_file=tests/test_files/test_output.csv
         reference_output_file=tests/test_files/reference_output.csv
-
+        
+        # confirm the input and reference output files are correct
+        echo "------------------------"
+        cat $input_file
+        echo "------------------------"
+        cat $reference_output_file
+        echo "------------------------"
 
         wwara_chirp $input_file $output_file
 
