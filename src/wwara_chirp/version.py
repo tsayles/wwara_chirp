@@ -1,2 +1,2 @@
 # src/wwara_chirp/version.py
-__version__ = "__version__ = "2.0.4""
+__version__ = "2.0.4rc4"
