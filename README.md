@@ -33,6 +33,9 @@ CSV files are easier to create and maintain, and they seamlessly integrate with
 CHIRP’s features, allowing users to import frequency data across a wide range of
 supported radios without the schema-related errors encountered with XML.
 
+## Prerequisites
+wwara_chirp is tested on python 3.10, 3.11, 3.12, and 3.13
+
 ## Installation
 To use the updated WWARA CHIRP export script, follow these steps:
 

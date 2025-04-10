@@ -90,7 +90,19 @@ class UpdateMockChirp:
         )
 
 def main():
+    print("Updating mock_chirp.py with latest constants")
     updater = UpdateMockChirp()
+
+    # Check if the script is being run in the correct directory
+    pwd = os.getcwd()
+    print(f"Current working directory: {pwd}")
+
+    # Create a clean {{repo}}/updater directory for the update process
+    if os.path.exists("updater"):
+        subprocess.run(["rm", "-rf", "updater"])
+    os.makedirs("updater")
+    os.chdir("updater")
+
     updater.clone_repo()
     updater.download_chirp_common()
     common_constants = updater.parse_chirp_common()
@@ -99,6 +111,13 @@ def main():
     if updated:
         updater.update_mock_chirp(updated_mock_constants)
         updater.commit_and_create_pr()
+    else:
+        print("No updates needed. mock_chirp.py is already up to date.")
+
+    # Clean up the updater directory
+    os.chdir("..")
+    subprocess.run(["rm", "-rf", "updater"])
+
 
 if __name__ == "__main__":
     main()
