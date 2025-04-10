@@ -1,4 +1,4 @@
-name: CLI Tool Test
+name: Test CLI tool on published package
 
 # This workflow tests for the intended behavior of the CLI tool
 
