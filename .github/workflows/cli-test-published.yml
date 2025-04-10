@@ -32,6 +32,7 @@ jobs:
       run: |
         pip install --pre --extra-index-url https://test.pypi.org/simple/ wwara-chirp
         which wwara_chirp
+        ls -la tests/test_files
 
     - name: Fetch the test files from the repo
       run: |
@@ -74,4 +75,14 @@ jobs:
         if ! grep -q "WWARA CHIRP Export Script Update" help_output.txt; then
           echo "CLI tool help flag test failed"
           exit 1
+        fi
+        
+    - name: Print wwara-chirp.log
+      if: always() # Ensures this step runs even if previous steps fail
+      run: |
+        if [ -f wwara-chirp.log ]; then
+          echo "Contents of wwara-chirp.log:"
+          cat wwara-chirp.log
+        else
+          echo "wwara-chirp.log not found."
         fi
