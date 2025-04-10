@@ -30,7 +30,7 @@ jobs:
 
     - name: Install package
       run: |
-        pip install --pre --extra-index-url https://test.pypi.org/simple/ wwara-chirp
+        pip install wwara-chirp
         which wwara_chirp
         wwara_chirp --version
 
