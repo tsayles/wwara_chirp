@@ -38,6 +38,7 @@ jobs:
         curl -o tests/test_files/reference_output.csv https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/reference_output.csv
         curl -o tests/test_files/WWARA-rptrlist-TEST.csv https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/WWARA-rptrlist-TEST.csv
         
+        pwd 
         ls -la tests/test_files
 
     - name: Test CLI tool
@@ -47,10 +48,13 @@ jobs:
         output_file=tests/test_files/test_output.csv
         reference_output_file=tests/test_files/reference_output.csv
         
+        pwd
         # confirm the input and reference output files are correct
         echo "------------------------"
+        echo $input_file
         cat $input_file
         echo "------------------------"
+        echo $output_file
         cat $reference_output_file
         echo "------------------------"
 
