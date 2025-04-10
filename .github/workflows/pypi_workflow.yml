@@ -38,6 +38,9 @@ jobs:
             # Install dependencies from pyproject.toml
             pip install poetry
             poetry install
+            
+            # Install PyGithub for GitHub API access
+            pip install PyGithub  
 
         - name: Set PYTHONPATH
           run: echo "PYTHONPATH=$(pwd)/src:$(pwd)/tests" >> $GITHUB_ENV

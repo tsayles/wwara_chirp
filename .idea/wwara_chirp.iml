@@ -7,6 +7,7 @@
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
       <excludeFolder url="file://$MODULE_DIR$/sample_files/DataBaseExtract" />
       <excludeFolder url="file://$MODULE_DIR$/.venv2" />
+      <excludeFolder url="file://$MODULE_DIR$/z_Archive" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.12 (wwara_chirp) (2)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

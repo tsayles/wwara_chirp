@@ -12,6 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # update README.md if you add a new version
         python-version: ["3.10", "3.11", "3.12", "3.13"]
 
     steps:
@@ -27,12 +28,13 @@ jobs:
         
         python -m pip install flake8 pytest pandas numpy  # Install flake8, pytest, pandas, and numpy
         
-        # Install chirp from the same location as called out in the pyproject.toml file
-        python -m pip install "chirp @ git+https://github.com/kk7ds/chirp.git@master"  
-        
         # Install dependencies from pyproject.toml
         pip install poetry
         poetry install
+        
+        pip install PyGithub  # Install PyGithub for GitHub API access
+        
+        pip list  # List installed packages for debugging
 
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=$(pwd)/src:$(pwd)/tests" >> $GITHUB_ENV  # Set the PYTHONPATH environment variable
@@ -44,14 +46,14 @@ jobs:
         # Exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: Folder structure debugging
-      run: |
-        echo "Python path: $PYTHONPATH"  # Print the PYTHONPATH for debugging
-        echo "Working directory: $(pwd)"  # Print the current working directory
-        ls -la  # List all files in the current directory
-        echo "Contents of src and tests directories"
-        ls -laR src  # List all files in the src directory
-        ls -la tests  # List all files in the tests directory
+#    - name: Folder structure debugging
+#      run: |
+#        echo "Python path: $PYTHONPATH"  # Print the PYTHONPATH for debugging
+#        echo "Working directory: $(pwd)"  # Print the current working directory
+#        ls -la  # List all files in the current directory
+#        echo "Contents of src and tests directories"
+#        ls -laR src  # List all files in the src directory
+#        ls -la tests  # List all files in the tests directory
 
     - name: Test with pytest
       run: |

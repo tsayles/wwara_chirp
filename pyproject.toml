@@ -1,9 +1,11 @@
 [project]
 name = "wwara-chirp"
-version = "2.0.3"
+
+version = "2.0.4"
+
 description = "WWARA CHIRP Export Script Update"
 readme = "README.md"
-license = { text = "MIT" }
+license =  "GPL-3.0"
 authors = [
     { name = "Tom Sayles (KE4HET)", email = "tsayles@Soot-n-Smoke.com" }
 ]
@@ -15,7 +17,6 @@ classifiers = [
     "Topic :: Communications :: Ham Radio",
     "Topic :: Education",
     "Topic :: Scientific/Engineering",
-    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12"
@@ -23,10 +24,12 @@ classifiers = [
 requires-python = ">=3.10,<4" # <4 is a pass through from chirp
 
 dependencies = [
-    "setuptools>=59.6,<77.1",
+    "setuptools>=59.6,<78.2",
     "pandas~=2.2.3",
     "numpy~=2.2.4",
-    "chirp @ git+https://github.com/kk7ds/chirp.git@master"
+    "requests>=2.26.0",
+    "PyGithub>=1.55.0"
+
 ]
 
 keywords = ["WWARA", "CHIRP"]
@@ -38,11 +41,28 @@ keywords = ["WWARA", "CHIRP"]
 requires = ["setuptools>=42", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[project.scripts]
+wwara_chirp = "wwara_chirp:main"
+
+[tool.poetry]
+name = "wwara-chirp"
+version = "2.0.4"
+description = "WWARA CHIRP Export Script Update"
+authors = ["Tom Sayles (KE4HET) <tsayles@Soot-n-Smoke.com>"]
+
 [tool.setuptools.packages.find]
 where = ["src"]
 
-[project.scripts]
-wwara_chirp = "wwara_chirp:main"
+[tool.poetry.dependencies]
+python = ">=3.10,<4"
+requests = "^2.26.0"
+PyGithub = "^1.55.0"
+#setuptools = ">=59.6,<77.1"
+pandas = "~2.2.3"
+numpy = "~2.2.4"
+
+[tool.poetry.dev-dependencies]
+pytest = ">=6.0"
 
 [project.optional-dependencies]
 test = [
@@ -50,3 +70,6 @@ test = [
     "pandas",
     "numpy"
 ]
+
+[tool.poetry.scripts]
+wwara_chirp = "wwara_chirp:main"
