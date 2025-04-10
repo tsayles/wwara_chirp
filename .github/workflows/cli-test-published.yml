@@ -33,22 +33,21 @@ jobs:
 
     - name: fetch the test files from the repo
       run: |
-        mkdir -p tests/test_files
-        curl -o tests/test_files/WWARA-rptrlist-TEST.csv https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/WWARA-rptrlist-TEST.csv
-        curl -o tests/test_files/reference_output.csv https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/reference_output.csv
-        curl -o tests/test_files/WWARA-rptrlist-TEST.csv https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/WWARA-rptrlist-TEST.csv
-        
-        pwd 
-        ls -la tests/test_files
-
-    - name: Test CLI tool
-      run: |
         
         input_file=tests/test_files/WWARA-rptrlist-TEST.csv
         output_file=tests/test_files/test_output.csv
         reference_output_file=tests/test_files/reference_output.csv
+
+        mkdir -p tests/test_files
+        curl -o $input_file https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/WWARA-rptrlist-TEST.csv
+        curl -o $reference_output_file https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/reference_output.csv
+
+    - name: Test CLI tool
+      run: |
         
-        pwd
+        pwd 
+        ls -la tests/test_files
+
         # confirm the input and reference output files are correct
         echo "------------------------"
         echo $input_file
