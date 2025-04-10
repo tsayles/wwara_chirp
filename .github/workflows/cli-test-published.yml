@@ -11,6 +11,11 @@ jobs:
   test-cli:
     runs-on: ubuntu-latest
 
+    env:
+      input_file: tests/test_files/WWARA-rptrlist-TEST.csv
+      output_file: tests/test_files/test_output.csv
+      reference_output_file: tests/test_files/reference_output.csv
+
     steps:
     - uses: actions/checkout@v4
 
@@ -24,55 +29,44 @@ jobs:
         python -m pip install --upgrade pip
 
     - name: Install package
-      # PIP Install the package from test.PyPi allowing prerelease versions
       run: |
         pip install --pre --extra-index-url https://test.pypi.org/simple/ wwara-chirp
-
         which wwara_chirp
 
-
-    - name: fetch the test files from the repo
+    - name: Fetch the test files from the repo
       run: |
-        
-        input_file=tests/test_files/WWARA-rptrlist-TEST.csv
-        output_file=tests/test_files/test_output.csv
-        reference_output_file=tests/test_files/reference_output.csv
-
         mkdir -p tests/test_files
-        curl -o $input_file https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/WWARA-rptrlist-TEST.csv
-        curl -o $reference_output_file https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/reference_output.csv
+        curl -o ${{ env.input_file }} https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/WWARA-rptrlist-TEST.csv
+        curl -o ${{ env.reference_output_file }} https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/reference_output.csv
 
     - name: Test CLI tool
       run: |
-        
-        pwd 
+        pwd
         ls -la tests/test_files
 
-        # confirm the input and reference output files are correct
         echo "------------------------"
-        echo $input_file
-        cat $input_file
+        echo ${{ env.input_file }}
+        cat ${{ env.input_file }}
         echo "------------------------"
-        echo $output_file
-        cat $reference_output_file
+        echo ${{ env.output_file }}
+        cat ${{ env.reference_output_file }}
         echo "------------------------"
 
-        wwara_chirp $input_file $output_file
+        wwara_chirp ${{ env.input_file }} ${{ env.output_file }}
 
-        if [ ! -f $output_file ]; then
+        if [ ! -f ${{ env.output_file }} ]; then
           echo "Output file not created"
           exit 1
         fi
 
-        if ! diff -q $output_file $reference_output_file; then
+        if ! diff -q ${{ env.output_file }} ${{ env.reference_output_file }}; then
           echo "Output file does not match reference output"
-          diff -q $output_file $reference_output_file
+          diff -q ${{ env.output_file }} ${{ env.reference_output_file }}
           exit 1
         fi
 
         echo "CLI tool test passed"
 
-    # check for the presence of --help flag in the CLI tool
     - name: Test CLI tool help flag
       run: |
         source venv/bin/activate
@@ -81,4 +75,3 @@ jobs:
           echo "CLI tool help flag test failed"
           exit 1
         fi
-        
