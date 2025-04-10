@@ -36,11 +36,16 @@ class TestUpdateMockChirp(unittest.TestCase):
 
     def test_parse_chirp_common(self):
         # Test parsing chirp_common.py
+        with open('test_chirp_common.py', 'w') as file:
+            file.write("CONSTANT_A = 1\nCONSTANT_B = 2\n")
+
         expected = {'CONSTANT_A': 1, 'CONSTANT_B': 2}
         result = self.updater.parse_chirp_common()
         self.assertEqual(result, expected)
 
     def test_parse_mock_chirp(self):
+        # TODO improve the contents of the mock_chirp.py file to include
+        #  irrelevant declarations, variables and functions
         # Test parsing mock_chirp.py
         self.updater.MOCK_CHIRP_FILENAME = 'test_mock_chirp.py'
         expected = {'CONSTANT_A': 1, 'CONSTANT_C': 3}

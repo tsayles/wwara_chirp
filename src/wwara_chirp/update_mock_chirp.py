@@ -37,10 +37,17 @@ class UpdateMockChirp:
         # Open 'chirp_common.py' and read its contents
         with open(self.CHIRP_COMMON_FILENAME, "r") as file:
             chirp_common = file.read()
-        # Parse the contents of 'chirp_common.py' as a dictionary
-        chirp_common_constants = ast.literal_eval(chirp_common)
-        # Filter constants that are uppercase from chirp_common_constants
-        return {k: v for k, v in chirp_common_constants.items() if k.isupper()}
+
+        # Create a controlled environment for execution
+        local_vars = {}
+        exec(chirp_common, {}, local_vars)
+
+        # Filter out constants (uppercase variable names)
+        chirp_common_constants = {
+            key: value for key, value in local_vars.items() if key.isupper()
+        }
+
+        return chirp_common_constants
 
     def parse_mock_chirp(self):
         # Open 'src/wwara_chirp/mock_chirp.py' and read its contents
