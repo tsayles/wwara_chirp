@@ -37,6 +37,8 @@ jobs:
         curl -o tests/test_files/WWARA-rptrlist-TEST.csv https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/WWARA-rptrlist-TEST.csv
         curl -o tests/test_files/reference_output.csv https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/reference_output.csv
         curl -o tests/test_files/WWARA-rptrlist-TEST.csv https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/WWARA-rptrlist-TEST.csv
+        
+        ls -la tests/test_files
 
     - name: Test CLI tool
       run: |
