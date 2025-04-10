@@ -24,9 +24,9 @@ jobs:
         python -m pip install --upgrade pip
 
     - name: Install package
-      # PIP Install the package in the virtual environment from test.PyPi
+      # PIP Install the package from test.PyPi allowing prerelease versions
       run: |
-        pip install --pre -i https://test.pypi.org/simple/ wwara-chirp
+        pip install --pre --extra-index-url https://test.pypi.org/simple/ wwara-chirp
 
         which wwara_chirp
 
