@@ -46,10 +46,10 @@ jobs:
 
         echo "------------------------"
         echo ${{ env.input_file }}
-        cat ${{ env.input_file }}
+        cat ./${{ env.input_file }}
         echo "------------------------"
         echo ${{ env.output_file }}
-        cat ${{ env.reference_output_file }}
+        cat ./${{ env.reference_output_file }}
         echo "------------------------"
 
         wwara_chirp ${{ env.input_file }} ${{ env.output_file }}
