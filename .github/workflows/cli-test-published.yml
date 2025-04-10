@@ -22,12 +22,14 @@ jobs:
     - name: Setup pip
       run: |
         python -m pip install --upgrade pip
-    
 
     - name: Install package
       # PIP Install the package in the virtual environment from test.PyPi
       run: |
         pip install -i https://test.pypi.org/simple/ wwara-chirp
+
+        which wwara_chirp
+
 
     - name: fetch the test files from the repo
       run: |
@@ -42,6 +44,7 @@ jobs:
         input_file=tests/test_files/WWARA-rptrlist-TEST.csv
         output_file=tests/test_files/test_output.csv
         reference_output_file=tests/test_files/reference_output.csv
+
 
         wwara_chirp $input_file $output_file
 

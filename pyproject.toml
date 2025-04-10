@@ -68,3 +68,6 @@ test = [
     "pandas",
     "numpy"
 ]
+
+[tool.poetry.scripts]
+wwara_chirp = "wwara_chirp:main"
