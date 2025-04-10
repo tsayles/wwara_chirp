@@ -1,0 +1,70 @@
+name: Test CLI tool on published package
+
+# This workflow tests for the intended behavior of the CLI tool
+
+on:
+  pull_request:
+    branches: [ "main"]
+  workflow_dispatch:
+
+jobs:
+  test-cli:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Setup pip
+      run: |
+        python -m pip install --upgrade pip
+    
+
+    - name: Install package
+      # PIP Install the package in the virtual environment from test.PyPi
+      run: |
+        pip install -i https://test.pypi.org/simple/ wwara-chirp
+
+    - name: fetch the test files from the repo
+      run: |
+        mkdir -p tests/test_files
+        curl -o tests/test_files/WWARA-rptrlist-TEST.csv https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/WWARA-rptrlist-TEST.csv
+        curl -o tests/test_files/reference_output.csv https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/reference_output.csv
+        curl -o tests/test_files/WWARA-rptrlist-TEST.csv https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/WWARA-rptrlist-TEST.csv
+
+    - name: Test CLI tool
+      run: |
+        
+        input_file=tests/test_files/WWARA-rptrlist-TEST.csv
+        output_file=tests/test_files/test_output.csv
+        reference_output_file=tests/test_files/reference_output.csv
+
+        wwara_chirp $input_file $output_file
+
+        if [ ! -f $output_file ]; then
+          echo "Output file not created"
+          exit 1
+        fi
+
+        if ! diff -q $output_file $reference_output_file; then
+          echo "Output file does not match reference output"
+          diff -q $output_file $reference_output_file
+          exit 1
+        fi
+
+        echo "CLI tool test passed"
+
+    # check for the presence of --help flag in the CLI tool
+    - name: Test CLI tool help flag
+      run: |
+        source venv/bin/activate
+        wwara_chirp --help > help_output.txt
+        if ! grep -q "WWARA CHIRP Export Script Update" help_output.txt; then
+          echo "CLI tool help flag test failed"
+          exit 1
+        fi
+        
