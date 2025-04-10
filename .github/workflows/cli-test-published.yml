@@ -34,12 +34,6 @@ jobs:
         which wwara_chirp
         ls -la tests/test_files
 
-    - name: Fetch the test files from the repo
-      run: |
-        mkdir -p tests/test_files
-        curl -o ${{ env.input_file }} https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/WWARA-rptrlist-TEST.csv
-        curl -o ${{ env.reference_output_file }} https://raw.githubusercontent.com/kk7ds/wwara-chirp/main/tests/test_files/reference_output.csv
-
     - name: Test CLI tool
       run: |
         pwd
@@ -47,10 +41,10 @@ jobs:
 
         echo "------------------------"
         echo ${{ env.input_file }}
-        cat ./${{ env.input_file }}
+        cat /home/runner/work/wwara_chirp/wwara_chirp/${{ env.input_file }}
         echo "------------------------"
         echo ${{ env.output_file }}
-        cat ./${{ env.reference_output_file }}
+        cat /home/runner/work/wwara_chirp/wwara_chirp/${{ env.reference_output_file }}
         echo "------------------------"
 
         wwara_chirp ${{ env.input_file }} ${{ env.output_file }}
