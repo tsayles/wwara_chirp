@@ -26,7 +26,7 @@ jobs:
     - name: Install package
       # PIP Install the package in the virtual environment from test.PyPi
       run: |
-        pip install -pre -i https://test.pypi.org/simple/ wwara-chirp
+        pip install --pre -i https://test.pypi.org/simple/ wwara-chirp
 
         which wwara_chirp
 
