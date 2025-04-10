@@ -32,20 +32,23 @@ jobs:
       run: |
         pip install --pre --extra-index-url https://test.pypi.org/simple/ wwara-chirp
         which wwara_chirp
+        
         ls -la tests/test_files
 
     - name: Test CLI tool
       run: |
         pwd
+        ls -la
+        echo "------------------------"
         ls -la tests/test_files
 
-        echo "------------------------"
-        echo ${{ env.input_file }}
-        cat /home/runner/work/wwara_chirp/wwara_chirp/${{ env.input_file }}
-        echo "------------------------"
-        echo ${{ env.output_file }}
-        cat /home/runner/work/wwara_chirp/wwara_chirp/${{ env.reference_output_file }}
-        echo "------------------------"
+#        echo "------------------------"
+#        echo ${{ env.input_file }}
+#        cat /home/runner/work/wwara_chirp/wwara_chirp/${{ env.input_file }}
+#        echo "------------------------"
+#        echo ${{ env.output_file }}
+#        cat /home/runner/work/wwara_chirp/wwara_chirp/${{ env.reference_output_file }}
+#        echo "------------------------"
 
         wwara_chirp ${{ env.input_file }} ${{ env.output_file }}
 
@@ -64,8 +67,8 @@ jobs:
 
     - name: Test CLI tool help flag
       run: |
-        source venv/bin/activate
         wwara_chirp --help > help_output.txt
+        cat help_output.txt
         if ! grep -q "WWARA CHIRP Export Script Update" help_output.txt; then
           echo "CLI tool help flag test failed"
           exit 1
