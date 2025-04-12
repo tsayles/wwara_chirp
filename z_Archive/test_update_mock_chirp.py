@@ -1,4 +1,4 @@
-# This file trys to replicate and test the behavior update_mock_chirp.py
+# This file trys to replicate and test the behavior update_constants.py
 # when run in a GitHub Actions environment.
 
 import os

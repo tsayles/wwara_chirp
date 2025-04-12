@@ -1,0 +1,17 @@
+{
+  "github_token_env": "GITHUB_TOKEN",
+  "working_dir": "updater",
+  "new_branch_name": "update-constants",
+  "source": {
+    "repo": "kk7ds/chirp",
+    "path": "chirp/chirp_common.py",
+    "branch": "master",
+    "file": "chirp_common.py"
+  },
+  "target": {
+    "repo": "tsayles/wwara_chirp",
+    "path": "src/wwara_chirp/mock_chirp.py",
+    "branch": "dev",
+    "file": "mock_chirp.py"
+  }
+}

@@ -23,6 +23,6 @@ jobs:
         pip install poetry
         poetry install
 
-    - name: Run update_mock_chirp.py
+    - name: Run update_constants.py
       run: |
-        python src/wwara_chirp/update_mock_chirp.py
+        python -m chirp.update_constants
