@@ -4,7 +4,7 @@
 import os
 import unittest
 import ast
-from src.wwara_chirp.update_mock_chirp import UpdateMockChirp
+from src.wwara_chirp.update_mock_chirp import UpdateConstants
 
 class TestUpdateMockChirp(unittest.TestCase):
 
@@ -30,8 +30,8 @@ class TestUpdateMockChirp(unittest.TestCase):
             file.write("{'CONSTANT_A': 1, 'CONSTANT_C': 3}")
 
     def setUp(self):
-        self.updater = UpdateMockChirp()
-        self.updater.CHIRP_COMMON_FILENAME = 'test_chirp_common.py'
+        self.updater = UpdateConstants()
+        self.updater.SOURCE_FILENAME = 'test_chirp_common.py'
         self.updater.MOCK_CHIRP_FILENAME = 'test_mock_chirp.py'
 
     def test_parse_chirp_common(self):
@@ -40,7 +40,7 @@ class TestUpdateMockChirp(unittest.TestCase):
             file.write("CONSTANT_A = 1\nCONSTANT_B = 2\n")
 
         expected = {'CONSTANT_A': 1, 'CONSTANT_B': 2}
-        result = self.updater.parse_chirp_common()
+        result = self.updater.parse_constants()
         self.assertEqual(result, expected)
 
     def test_parse_mock_chirp(self):
