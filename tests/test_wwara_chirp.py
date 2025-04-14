@@ -100,7 +100,7 @@ class TestWWARACSVToChirpCSV(unittest.TestCase):
 
         self.assertEqual(chirp_row['Name'], 'K7LED')
         self.assertEqual(chirp_row['Frequency'], '146.820000')
-        self.assertEqual(chirp_row['Duplex'], '+')
+        self.assertEqual(chirp_row['Duplex'], '-')
         self.assertEqual(chirp_row['Offset'], '0.600000')
         self.assertEqual(chirp_row['Tone'], 'Tone')
         self.assertEqual(chirp_row['rToneFreq'], 88.5)
