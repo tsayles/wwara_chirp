@@ -37,6 +37,13 @@ jobs:
         which wwara_chirp
         echo "wwara_chirp --version"
         wwara_chirp --version
+        python3 -m pip show wwara_chirp
+
+    - name: Check sample test and reference files
+      run: |
+        grep K4LED ${{ env.input_file }}
+        grep K4LED ${{ env.reference_output_file }}
+        
 
     - name: Test CLI tool
       run: |
