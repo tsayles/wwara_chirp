@@ -31,7 +31,11 @@ jobs:
     - name: Install package
       run: |
         pip install --pre --extra-index-url https://test.pypi.org/simple/ wwara-chirp
+        echo
+        echo "****************************************************"
+        echo "which wwara_chirp"
         which wwara_chirp
+        echo "wwara_chirp --version"
         wwara_chirp --version
 
     - name: Test CLI tool
