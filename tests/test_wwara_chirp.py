@@ -32,35 +32,35 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 class TestWWARACSVToChirpCSV(unittest.TestCase):
 
     def test_write_output_file(self):
-        write_output_file('test_files/test_output.csv', pd.DataFrame())
-        self.assertTrue(os.path.exists('test_files/test_output.csv'))
-        os.remove('test_files/test_output.csv')
+        write_output_file('tests/test_files/test_output.csv', pd.DataFrame())
+        self.assertTrue(os.path.exists('tests/test_files/test_output.csv'))
+        os.remove('tests/test_files/test_output.csv')
 
     def test_process_file(self):
-        process_file('test_files/WWARA-rptrlist-TEST.csv', 'test_files/test_output_file.csv')
-        self.assertTrue(os.path.exists('test_files/test_output_file.csv'))
+        process_file('tests/test_files/WWARA-rptrlist-TEST.csv', 'tests/test_files/test_output_file.csv')
+        self.assertTrue(os.path.exists('tests/test_files/test_output_file.csv'))
         # check that the output file matches the reference output file
         output = ""
         reference_output = ""
-        with open('test_files/test_output_file.csv', 'r') as f:
+        with open('tests/test_files/test_output_file.csv', 'r') as f:
             output = f.read()
-        with open('test_files/reference_output.csv', 'r') as f:
+        with open('tests/test_files/reference_output.csv', 'r') as f:
             reference_output = f.read()
         self.assertEqual(output, reference_output)
-        os.remove('test_files/test_output_file.csv')
+        os.remove('tests/test_files/test_output_file.csv')
 
     def test_main(self):
         # Simulate command line arguments
-        sys.argv = ['wwara_chirp', 'test_files/WWARA-rptrlist-TEST.csv', 'test_files/test_output_main.csv']
+        sys.argv = ['wwara_chirp', 'tests/test_files/WWARA-rptrlist-TEST.csv', 'tests/test_files/test_output_main.csv']
         main()
-        self.assertTrue(os.path.exists('test_files/test_output_main.csv'))
+        self.assertTrue(os.path.exists('tests/test_files/test_output_main.csv'))
         # check that the output file matches the reference output file
-        with open('test_files/test_output_main.csv', 'r') as f:
+        with open('tests/test_files/test_output_main.csv', 'r') as f:
             output = f.read()
-        with open('test_files/reference_output.csv', 'r') as f:
+        with open('tests/test_files/reference_output.csv', 'r') as f:
             reference_output = f.read()
         self.assertEqual(output, reference_output)
-        os.remove('test_files/test_output_main.csv')
+        os.remove('tests/test_files/test_output_main.csv')
 
     def test_process_row(self):
         wwara_row = pd.Series({

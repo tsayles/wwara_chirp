@@ -40,17 +40,17 @@ from wwara_chirp.chirpvalidator import ChirpValidator
 class TestCHIRPValidator(unittest.TestCase):
     def test_validate_input_file(self):
         assert ChirpValidator.validate_input_file(
-            'test_files/valid_input.csv') == True
+            'tests/test_files/valid_input.csv') == True
         assert ChirpValidator.validate_input_file(
-            'test_files/invalid_input.txt') == True
+            'tests/test_files/invalid_input.txt') == True
         assert ChirpValidator.validate_input_file(
-            'test_files/non_existent_file.csv') == False
+            'tests/test_files/non_existent_file.csv') == False
 
     def test_validate_output_file(self):
             assert ChirpValidator.validate_output_file(
-                'test_files/new_output.csv') == True
+                'tests/test_files/new_output.csv') == True
             assert ChirpValidator.validate_output_file(
-                'test_files/existing_output.csv') == False
+                'tests/test_files/existing_output.csv') == False
 
     def test_validate_location(self):
         assert ChirpValidator.validate_location(100) == True

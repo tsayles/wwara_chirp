@@ -4,6 +4,7 @@ pyproject.toml
 src/wwara_chirp/__init__.py
 src/wwara_chirp/chirpvalidator.py
 src/wwara_chirp/mock_chirp.py
+src/wwara_chirp/rest_api.py
 src/wwara_chirp/update_mock_chirp.py
 src/wwara_chirp/version.py
 src/wwara_chirp/wwara_chirp.py
@@ -14,5 +15,6 @@ src/wwara_chirp.egg-info/entry_points.txt
 src/wwara_chirp.egg-info/requires.txt
 src/wwara_chirp.egg-info/top_level.txt
 tests/test_chirp_validator.py
+tests/test_rest_api.py
 tests/test_update_mock_chirp.py
 tests/test_wwara_chirp.py
