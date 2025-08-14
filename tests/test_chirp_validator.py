@@ -33,24 +33,29 @@ Test Cases:
     - test_validate_row: Tests the validation of complete CHIRP rows.
 """
 
+import os
 import unittest
 from wwara_chirp.chirpvalidator import ChirpValidator
+
+# Get the directory where this test file is located
+TEST_DIR = os.path.dirname(os.path.abspath(__file__))
+TEST_FILES_DIR = os.path.join(TEST_DIR, 'test_files')
 
 
 class TestCHIRPValidator(unittest.TestCase):
     def test_validate_input_file(self):
         assert ChirpValidator.validate_input_file(
-            'tests/test_files/valid_input.csv') == True
+            os.path.join(TEST_FILES_DIR, 'valid_input.csv')) == True
         assert ChirpValidator.validate_input_file(
-            'tests/test_files/invalid_input.txt') == True
+            os.path.join(TEST_FILES_DIR, 'invalid_input.txt')) == True
         assert ChirpValidator.validate_input_file(
-            'tests/test_files/non_existent_file.csv') == False
+            os.path.join(TEST_FILES_DIR, 'non_existent_file.csv')) == False
 
     def test_validate_output_file(self):
             assert ChirpValidator.validate_output_file(
-                'tests/test_files/new_output.csv') == True
+                os.path.join(TEST_FILES_DIR, 'new_output.csv')) == True
             assert ChirpValidator.validate_output_file(
-                'tests/test_files/existing_output.csv') == False
+                os.path.join(TEST_FILES_DIR, 'existing_output.csv')) == False
 
     def test_validate_location(self):
         assert ChirpValidator.validate_location(100) == True

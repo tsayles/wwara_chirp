@@ -28,39 +28,43 @@ from wwara_chirp.wwara_chirp import write_output_file, main, process_row, proces
 # Add the module's directory to the Python path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
+# Get the directory where this test file is located
+TEST_DIR = os.path.dirname(os.path.abspath(__file__))
+TEST_FILES_DIR = os.path.join(TEST_DIR, 'test_files')
+
 
 class TestWWARACSVToChirpCSV(unittest.TestCase):
 
     def test_write_output_file(self):
-        write_output_file('tests/test_files/test_output.csv', pd.DataFrame())
-        self.assertTrue(os.path.exists('tests/test_files/test_output.csv'))
-        os.remove('tests/test_files/test_output.csv')
+        write_output_file(os.path.join(TEST_FILES_DIR, 'test_output.csv'), pd.DataFrame())
+        self.assertTrue(os.path.exists(os.path.join(TEST_FILES_DIR, 'test_output.csv')))
+        os.remove(os.path.join(TEST_FILES_DIR, 'test_output.csv'))
 
     def test_process_file(self):
-        process_file('tests/test_files/WWARA-rptrlist-TEST.csv', 'tests/test_files/test_output_file.csv')
-        self.assertTrue(os.path.exists('tests/test_files/test_output_file.csv'))
+        process_file(os.path.join(TEST_FILES_DIR, 'WWARA-rptrlist-TEST.csv'), os.path.join(TEST_FILES_DIR, 'test_output_file.csv'))
+        self.assertTrue(os.path.exists(os.path.join(TEST_FILES_DIR, 'test_output_file.csv')))
         # check that the output file matches the reference output file
         output = ""
         reference_output = ""
-        with open('tests/test_files/test_output_file.csv', 'r') as f:
+        with open(os.path.join(TEST_FILES_DIR, 'test_output_file.csv'), 'r') as f:
             output = f.read()
-        with open('tests/test_files/reference_output.csv', 'r') as f:
+        with open(os.path.join(TEST_FILES_DIR, 'reference_output.csv'), 'r') as f:
             reference_output = f.read()
         self.assertEqual(output, reference_output)
-        os.remove('tests/test_files/test_output_file.csv')
+        os.remove(os.path.join(TEST_FILES_DIR, 'test_output_file.csv'))
 
     def test_main(self):
         # Simulate command line arguments
-        sys.argv = ['wwara_chirp', 'tests/test_files/WWARA-rptrlist-TEST.csv', 'tests/test_files/test_output_main.csv']
+        sys.argv = ['wwara_chirp', os.path.join(TEST_FILES_DIR, 'WWARA-rptrlist-TEST.csv'), os.path.join(TEST_FILES_DIR, 'test_output_main.csv')]
         main()
-        self.assertTrue(os.path.exists('tests/test_files/test_output_main.csv'))
+        self.assertTrue(os.path.exists(os.path.join(TEST_FILES_DIR, 'test_output_main.csv')))
         # check that the output file matches the reference output file
-        with open('tests/test_files/test_output_main.csv', 'r') as f:
+        with open(os.path.join(TEST_FILES_DIR, 'test_output_main.csv'), 'r') as f:
             output = f.read()
-        with open('tests/test_files/reference_output.csv', 'r') as f:
+        with open(os.path.join(TEST_FILES_DIR, 'reference_output.csv'), 'r') as f:
             reference_output = f.read()
         self.assertEqual(output, reference_output)
-        os.remove('tests/test_files/test_output_main.csv')
+        os.remove(os.path.join(TEST_FILES_DIR, 'test_output_main.csv'))
 
     def test_process_row(self):
         wwara_row = pd.Series({

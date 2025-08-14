@@ -81,3 +81,35 @@
 2025-08-14 03:17:11,959 - INFO - Number of memory channels written: 434
 2025-08-14 03:17:11,962 - INFO - Output file written: tests/test_files/test_output.csv
 2025-08-14 03:17:11,962 - INFO - Number of memory channels written: 0
+2025-08-14 03:40:54,667 - DEBUG - Script started
+2025-08-14 03:40:54,668 - DEBUG - Input file: tests/test_files/WWARA-rptrlist-TEST.csv
+2025-08-14 03:40:54,668 - DEBUG - Output file: tests/test_files/test_output_main.csv
+2025-08-14 03:40:54,668 - DEBUG - Reading input file: tests/test_files/WWARA-rptrlist-TEST.csv
+2025-08-14 03:40:54,672 - DEBUG - Number of memory channels read: 434
+2025-08-14 03:40:54,908 - INFO - Output file written: tests/test_files/test_output_main.csv
+2025-08-14 03:40:54,908 - INFO - Number of memory channels written: 434
+2025-08-14 03:40:54,910 - DEBUG - Script started
+2025-08-14 03:40:54,910 - DEBUG - Input file: tests/test_files/WWARA-rptrlist-TEST.csv
+2025-08-14 03:40:54,910 - DEBUG - Output file: tests/test_files/test_output_file.csv
+2025-08-14 03:40:54,910 - DEBUG - Reading input file: tests/test_files/WWARA-rptrlist-TEST.csv
+2025-08-14 03:40:54,914 - DEBUG - Number of memory channels read: 434
+2025-08-14 03:40:55,150 - INFO - Output file written: tests/test_files/test_output_file.csv
+2025-08-14 03:40:55,150 - INFO - Number of memory channels written: 434
+2025-08-14 03:40:55,153 - INFO - Output file written: tests/test_files/test_output.csv
+2025-08-14 03:40:55,153 - INFO - Number of memory channels written: 0
+2025-08-14 03:44:32,598 - DEBUG - Script started
+2025-08-14 03:44:32,598 - DEBUG - Input file: /home/runner/work/wwara_chirp/wwara_chirp/tests/test_files/WWARA-rptrlist-TEST.csv
+2025-08-14 03:44:32,599 - DEBUG - Output file: /home/runner/work/wwara_chirp/wwara_chirp/tests/test_files/test_output_main.csv
+2025-08-14 03:44:32,599 - DEBUG - Reading input file: /home/runner/work/wwara_chirp/wwara_chirp/tests/test_files/WWARA-rptrlist-TEST.csv
+2025-08-14 03:44:32,602 - DEBUG - Number of memory channels read: 434
+2025-08-14 03:44:32,835 - INFO - Output file written: /home/runner/work/wwara_chirp/wwara_chirp/tests/test_files/test_output_main.csv
+2025-08-14 03:44:32,836 - INFO - Number of memory channels written: 434
+2025-08-14 03:44:32,837 - DEBUG - Script started
+2025-08-14 03:44:32,837 - DEBUG - Input file: /home/runner/work/wwara_chirp/wwara_chirp/tests/test_files/WWARA-rptrlist-TEST.csv
+2025-08-14 03:44:32,837 - DEBUG - Output file: /home/runner/work/wwara_chirp/wwara_chirp/tests/test_files/test_output_file.csv
+2025-08-14 03:44:32,837 - DEBUG - Reading input file: /home/runner/work/wwara_chirp/wwara_chirp/tests/test_files/WWARA-rptrlist-TEST.csv
+2025-08-14 03:44:32,841 - DEBUG - Number of memory channels read: 434
+2025-08-14 03:44:33,074 - INFO - Output file written: /home/runner/work/wwara_chirp/wwara_chirp/tests/test_files/test_output_file.csv
+2025-08-14 03:44:33,074 - INFO - Number of memory channels written: 434
+2025-08-14 03:44:33,077 - INFO - Output file written: /home/runner/work/wwara_chirp/wwara_chirp/tests/test_files/test_output.csv
+2025-08-14 03:44:33,077 - INFO - Number of memory channels written: 0
