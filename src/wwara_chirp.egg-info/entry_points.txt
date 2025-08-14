@@ -1,0 +1,2 @@
+[console_scripts]
+wwara_chirp = wwara_chirp:main

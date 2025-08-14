@@ -1,0 +1,10 @@
+setuptools<78.2,>=59.6
+pandas~=2.2.3
+numpy~=2.2.4
+requests>=2.26.0
+PyGithub>=1.55.0
+
+[test]
+pytest>=6.0
+pandas
+numpy

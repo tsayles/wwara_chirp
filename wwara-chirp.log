@@ -1,0 +1,6 @@
+2025-08-14 00:48:28,073 - DEBUG - Script started
+2025-08-14 00:48:28,073 - DEBUG - Input file: test_files/WWARA-rptrlist-TEST.csv
+2025-08-14 00:48:28,073 - DEBUG - Output file: test_files/test_output_main.csv
+2025-08-14 00:48:28,082 - DEBUG - Script started
+2025-08-14 00:48:28,082 - DEBUG - Input file: test_files/WWARA-rptrlist-TEST.csv
+2025-08-14 00:48:28,082 - DEBUG - Output file: test_files/test_output_file.csv
