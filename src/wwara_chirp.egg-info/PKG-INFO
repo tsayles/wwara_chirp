@@ -1,3 +1,37 @@
+Metadata-Version: 2.4
+Name: wwara-chirp
+Version: 2.0.4
+Summary: WWARA CHIRP Export Script Update
+Author-email: "Tom Sayles (KE4HET)" <tsayles@Soot-n-Smoke.com>
+License-Expression: GPL-3.0
+Project-URL: Bug Reports, https://github.com/tsayles/wwara-chirp/issues
+Keywords: WWARA,CHIRP
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: Science/Research
+Classifier: Intended Audience :: Other Audience
+Classifier: Topic :: Communications :: Ham Radio
+Classifier: Topic :: Education
+Classifier: Topic :: Scientific/Engineering
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: <4,>=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE.txt
+Requires-Dist: setuptools<78.2,>=59.6
+Requires-Dist: pandas~=2.2.3
+Requires-Dist: numpy~=2.2.4
+Requires-Dist: requests>=2.26.0
+Requires-Dist: PyGithub>=1.55.0
+Requires-Dist: flask>=2.0.0
+Requires-Dist: flask-cors>=3.0.0
+Provides-Extra: test
+Requires-Dist: pytest>=6.0; extra == "test"
+Requires-Dist: pandas; extra == "test"
+Requires-Dist: numpy; extra == "test"
+Dynamic: license-file
+
 # WWARA CHIRP Export Script Update
 
 ### **Note: This is a work in progress. The script is mostly functional, and the documentation is aspirational.** 
