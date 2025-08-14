@@ -20,3 +20,10 @@
 2025-08-14 00:54:13,246 - DEBUG - Number of memory channels read: 434
 2025-08-14 00:54:13,483 - INFO - Output file written: /tmp/test_cli_output.csv
 2025-08-14 00:54:13,483 - INFO - Number of memory channels written: 434
+2025-08-14 00:56:59,961 - DEBUG - Script started
+2025-08-14 00:56:59,961 - DEBUG - Input file: sample_files/WWARA-rptrlist-SAMPLE.csv
+2025-08-14 00:56:59,961 - DEBUG - Output file: /tmp/final_test_output.csv
+2025-08-14 00:56:59,961 - DEBUG - Reading input file: sample_files/WWARA-rptrlist-SAMPLE.csv
+2025-08-14 00:56:59,967 - DEBUG - Number of memory channels read: 434
+2025-08-14 00:57:00,209 - INFO - Output file written: /tmp/final_test_output.csv
+2025-08-14 00:57:00,209 - INFO - Number of memory channels written: 434
