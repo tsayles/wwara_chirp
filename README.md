@@ -52,6 +52,8 @@ you can also upgrade the package to the latest stable version.
     ```
 
 ## Usage
+
+### Command Line Interface
 To export WWARA repeater data for CHIRP programming, run the script with the
 following command:
 * `wwara_chirp <input_file> <output_file>`
@@ -65,6 +67,76 @@ CHIRP format, and write the output file in CSV format for CHIRP import. The
 output file should be imported to a new CHIRP channel list, and specific entries
 can be copy and pasted to the desired radio memory channels of the user's radio
 file.
+
+### REST API Interface
+The package now includes a REST API server for web-based conversion. This allows
+websites and web applications to convert WWARA data to CHIRP format through HTTP
+requests.
+
+#### Starting the REST API Server
+```bash
+# Start the server on localhost:5000
+python -c "from wwara_chirp.rest_api import run_server; run_server()"
+
+# Or start on a specific host/port
+python -c "from wwara_chirp.rest_api import run_server; run_server(host='0.0.0.0', port=8080)"
+```
+
+#### API Endpoints
+
+**Health Check**
+```bash
+GET /api/health
+```
+
+**API Information**
+```bash
+GET /api/info
+```
+
+**Validate WWARA CSV**
+```bash
+POST /api/validate
+Content-Type: application/json
+{"csv_data": "...csv content..."}
+```
+
+**Convert WWARA CSV to CHIRP Format**
+```bash
+# File upload
+POST /api/convert
+Content-Type: multipart/form-data
+Form field: file (CSV file)
+
+# Raw CSV data
+POST /api/convert
+Content-Type: text/csv
+Body: CSV content
+
+# JSON with CSV data
+POST /api/convert
+Content-Type: application/json
+{"csv_data": "...csv content..."}
+```
+
+**Download Converted File**
+```bash
+GET /api/download/<file_id>
+```
+
+#### Example Usage
+```bash
+# Test with curl - file upload
+curl -X POST -F "file=@WWARA-rptrlist.csv" http://localhost:5000/api/convert
+
+# Test with curl - raw CSV
+curl -X POST -H "Content-Type: text/csv" --data-binary @WWARA-rptrlist.csv http://localhost:5000/api/convert
+
+# Test validation
+curl -X POST -F "file=@WWARA-rptrlist.csv" http://localhost:5000/api/validate
+```
+
+For a complete example, see `examples/rest_api_example.py`.
 
 
 ## Future Plans
