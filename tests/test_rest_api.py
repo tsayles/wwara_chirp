@@ -12,9 +12,14 @@ import tempfile
 import os
 from io import BytesIO
 
-from wwara_chirp.rest_api import create_app
+try:
+    from wwara_chirp.rest_api import create_app
+    flask_available = True
+except ImportError:
+    flask_available = False
 
 
+@unittest.skipIf(not flask_available, "Flask not available - REST API tests skipped")
 class TestWWARAChirpRestAPI(unittest.TestCase):
     """Test the REST API endpoints"""
     
