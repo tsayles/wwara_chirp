@@ -1,0 +1,7 @@
+2025-08-14 14:38:45,056 - DEBUG - Script started
+2025-08-14 14:38:45,056 - DEBUG - Input file: tests/test_files/WWARA-rptrlist-TEST.csv
+2025-08-14 14:38:45,056 - DEBUG - Output file: /tmp/test_output.csv
+2025-08-14 14:38:45,056 - DEBUG - Reading input file: tests/test_files/WWARA-rptrlist-TEST.csv
+2025-08-14 14:38:45,073 - DEBUG - Number of memory channels read: 434
+2025-08-14 14:38:45,314 - INFO - Output file written: /tmp/test_output.csv
+2025-08-14 14:38:45,314 - INFO - Number of memory channels written: 434
