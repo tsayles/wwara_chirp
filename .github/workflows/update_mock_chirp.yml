@@ -26,4 +26,4 @@ jobs:
 
     - name: Run update_constants.py
       run: |
-        python -m chirp.update_constants
+        python -m wwara_chirp.update_constants

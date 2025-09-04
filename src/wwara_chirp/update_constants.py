@@ -92,7 +92,7 @@ class UpdateConstants:
         return False
 
 
-    def fetch_file(self, repo_name, file_name, branch):
+    def fetch_file(self, repo_name, repo_path, file_name, branch):
         """
         Fetches a file from a GitHub repository and writes it locally.
 
@@ -105,14 +105,15 @@ class UpdateConstants:
             str: The content of the fetched file.
         """
         repo = self.github.get_repo(repo_name)
-        contents = repo.get_contents(file_name, ref=branch).decoded_content
+        contents = repo.get_contents(repo_path, ref=branch).decoded_content
+        contents_str = contents.decode("utf-8")
         with open(file_name, "w") as file:
-            file.write(contents)
+            file.write(contents_str)
 
         logging.debug(f"Fetched {file_name} from {repo_name}")
         logging.debug(contents)
 
-        return contents
+        return contents_str
 
 
     @staticmethod
@@ -129,8 +130,39 @@ class UpdateConstants:
         Returns:
             bool: True if the target file was updated, False otherwise.
         """
-        with open(source_path, 'r') as source_file:
-            source_constants = ast.literal_eval(source_file.read())
+
+        # logging.debug the paths
+        logging.debug(f"PWD: " + os.getcwd())
+        logging.debug(f"Source path: {source_path}")
+        logging.debug(f"Target path: {target_path}")
+        logging.debug(f"New path: {new_path}")
+
+        # check if the files exist
+        if not os.path.exists(source_path):
+            raise FileNotFoundError(f"Source file not found: {source_path}")
+        if not os.path.exists(target_path):
+            raise FileNotFoundError(f"Target file not found: {target_path}")
+
+        # build a dict with the constants from the target file
+        # TODO Refactor to pull the class name from the config file
+        target_constants = UpdateConstants.extract_class_constants(
+            file_to_inspect=target_path, class_name="MockChirp")
+        logging.debug(f"Target constants: {target_constants}")
+
+
+        # Step through the target constants and find any that are in the
+        # source constants but have different values.
+        for const_name in target_constants:
+            logging.debug(f"Target constant: {const_name} "
+                          f"= {target_constants[const_name]}")
+
+        # TODO START_HERE   Needs code to find the mock constants in
+        #  the chirp_common.py. refactor to open chirp_common.py once
+        #  and use ast to find the constants in the file. Need to impliment
+        #  a way to identify the changed constants, and then update the
+        #  target file with the new values.
+
+
 
         with open(target_path, 'r') as target_file:
             target_constants = ast.literal_eval(target_file.read())
@@ -147,6 +179,66 @@ class UpdateConstants:
 
         return updated
 
+    @staticmethod
+    def extract_class_constants(file_to_inspect, class_name="MockChirp"):
+        '''
+        Extracts constants from a specified class in a Python source file.
+        :param file_to_inspect:
+        :param class_name:
+        :return:
+        '''
+
+        with open(file_to_inspect, "r") as f:
+            tree = ast.parse(f.read(), filename=file_to_inspect)
+
+        constants = {}
+        try:
+
+            for node in ast.walk(tree):
+                if isinstance(node, ast.ClassDef) and node.name == class_name:
+                    for stmt in node.body:
+                        if isinstance(stmt, ast.Assign):
+                            for target in stmt.targets:
+                                if isinstance(target, ast.Name):
+                                    # Only include ALL_CAPS names (convention for constants)
+                                    if target.id.isupper():
+                                        value = ast.literal_eval(stmt.value)
+                                        constants[target.id] = value
+
+        except Exception as e:
+            logging.error(f"Error parsing {file_to_inspect} "
+                          f"at node {ast.dump(node)}: {e}")
+            raise e
+
+        return constants
+
+    @staticmethod
+    def find_constant_in_file(file_path, constant_name):
+        """
+        Finds the value of a constant definition in a Python file.
+
+        Args:
+            file_path (str): Path to the Python file.
+            constant_name (str): Name of the constant to find.
+
+        Returns:
+            The value of the constant if found, otherwise None.
+        """
+        with open(file_path, "r") as f:
+            tree = ast.parse(f.read(), filename=file_path)
+        for node in tree.body:
+            if isinstance(node, ast.Assign):
+                for target in node.targets:
+                    if isinstance(target, ast.Name) and target.id == constant_name:
+                        try:
+                            return ast.literal_eval(node.value)
+                        except Exception:
+                            return None
+        return None
+
+    # Example usage:
+    # value = get_constant_value('src/wwara_chirp/updater/chirp_common.py', 'DTCS_CODES')
+    # print(value)
 
     def commit_updates(self):
         """
@@ -233,13 +325,17 @@ class UpdateConstants:
 def main():
 
     # Set up logging
-    logging.basicConfig(level=logging.INFO)
+    logging.basicConfig(level=logging.DEBUG)
     logging.info("Starting the update process")
+
+    # log pwd where files will be downloaded
+    logging.info(f"Working directory: {os.getcwd()}")
 
     # use parse args to get the config file
     parser = argparse.ArgumentParser(description="Update constants in a file.")
     parser.add_argument(
-        "--config", type=str, default="config.json",
+        "--config", type=str,
+        default="update_mock_chirp_const.json",
         help="Path to the config file"
     )
     args = parser.parse_args()
@@ -249,14 +345,20 @@ def main():
     updater = UpdateConstants(config_path=config_json)
 
     # Fetch files
-    updater.fetch_file(updater.TARGET_REPO, updater.TARGET_FILE,
-                       updater.TARGET_BRANCH)
-    updater.fetch_file(updater.SOURCE_REPO, updater.SOURCE_FILE,
-                       updater.SOURCE_BRANCH)
+    updater.fetch_file(updater.TARGET_REPO, updater.TARGET_REPO_PATH,
+                       updater.TARGET_FILE, updater.TARGET_BRANCH)
+    updater.target_local_path = f"{updater.WORKING_DIR}/{updater.TARGET_FILE}"
+
+    updater.fetch_file(updater.SOURCE_REPO, updater.SOURCE_REPO_PATH,
+                       updater.SOURCE_FILE, updater.SOURCE_BRANCH)
+    updater.source_local_path = f"{updater.WORKING_DIR}/{updater.SOURCE_FILE}"
+
+    # extract constants from the target file
+
 
     # Compare and update constants
     updated = updater.compare_and_update_constants(
-        updater.source_local_path, updater.target_local_path,
+        updater.SOURCE_FILE, updater.TARGET_FILE,
         updater.target_local_path
     )
     if updated:
