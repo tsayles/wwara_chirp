@@ -69,7 +69,6 @@ def convert_wwara_to_chirp_data(wwara_csv_content):
         try:
             # Import required modules for conversion
             from wwara_chirp.wwara_chirp import process_row, write_output_file, CHIRP_COLUMNS
-            import pandas as pd
             
             # Initialize conversion variables
             channel = 0
