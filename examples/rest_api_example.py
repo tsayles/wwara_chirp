@@ -83,7 +83,7 @@ def test_rest_api(base_url="http://localhost:5000"):
         try:
             error = response.json()
             print(f"   Error: {error.get('error', 'Unknown error')}")
-        except:
+        except Exception:
             print(f"   Response: {response.text}")
     
     print("\n" + "=" * 60)
