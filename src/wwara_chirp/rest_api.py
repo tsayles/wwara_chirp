@@ -21,7 +21,6 @@ import pandas as pd
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 
-from wwara_chirp.wwara_chirp import process_file as process_file_cli
 from wwara_chirp.chirpvalidator import ChirpValidator
 from wwara_chirp.version import __version__
 
