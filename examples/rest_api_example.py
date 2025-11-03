@@ -6,7 +6,6 @@ This script shows how to use the REST API for converting WWARA repeater data
 to CHIRP format through various methods.
 """
 
-import json
 import requests
 import sys
 
