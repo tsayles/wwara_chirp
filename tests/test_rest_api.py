@@ -8,7 +8,6 @@ to CHIRP format via HTTP endpoints.
 
 import unittest
 import json
-import tempfile
 import os
 from io import BytesIO
 
