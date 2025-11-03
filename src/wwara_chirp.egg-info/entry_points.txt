@@ -1,3 +1,0 @@
-[console_scripts]
-wwara_chirp = wwara_chirp:main
-wwara_chirp_server = wwara_chirp.rest_api:run_server

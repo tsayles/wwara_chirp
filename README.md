@@ -82,6 +82,12 @@ python -c "from wwara_chirp.rest_api import run_server; run_server()"
 python -c "from wwara_chirp.rest_api import run_server; run_server(host='0.0.0.0', port=8080)"
 ```
 
+**Security Note:** By default, CORS is enabled for all origins to facilitate development and testing. In production environments, you should restrict CORS to specific origins by modifying the `CORS` configuration in `rest_api.py`:
+```python
+CORS(app, resources={r'/api/*': {'origins': ['http://yourdomain.com']}})
+```
+or configure it using environment variables based on your deployment needs.
+
 #### API Endpoints
 
 **Health Check**

@@ -25,11 +25,11 @@ def test_rest_api(base_url="http://localhost:5000"):
             print(f"✓ Service is healthy: {health['service']} v{health['version']}")
         else:
             print(f"✗ Health check failed: {response.status_code}")
-            return False
+            return
     except requests.exceptions.ConnectionError:
         print("✗ Cannot connect to REST API server")
         print("  Please start the server with: python -c \"from wwara_chirp.rest_api import run_server; run_server()\"")
-        return False
+        return
     
     # Test API info
     print("\n2. Getting API information...")

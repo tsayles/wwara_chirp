@@ -13,6 +13,7 @@ License: GPL-3.0 License (see LICENSE file)
 import io
 import logging
 import tempfile
+import threading
 import uuid
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -30,21 +31,26 @@ log = logging.getLogger(__name__)
 
 # Initialize Flask app
 app = Flask(__name__)
+# TODO: In production, restrict CORS to specific origins for security:
+# CORS(app, resources={r'/api/*': {'origins': ['http://example.com']}})
+# or configure via environment variables
 CORS(app)  # Enable CORS for web browser access
 
 # In-memory storage for temporary files (in production, use proper storage)
 temp_files = {}
+temp_files_lock = threading.Lock()  # Thread-safe access to temp_files
 TEMP_FILE_TTL = timedelta(hours=1)  # Temp files expire after 1 hour
 
 def cleanup_expired_files():
     """Remove expired temporary files"""
     current_time = datetime.now()
-    expired_keys = [
-        key for key, (_, timestamp) in temp_files.items()
-        if current_time - timestamp > TEMP_FILE_TTL
-    ]
-    for key in expired_keys:
-        temp_files.pop(key, None)
+    with temp_files_lock:
+        expired_keys = [
+            key for key, (_, timestamp) in temp_files.items()
+            if current_time - timestamp > TEMP_FILE_TTL
+        ]
+        for key in expired_keys:
+            temp_files.pop(key, None)
 
 def convert_wwara_to_chirp_data(wwara_csv_content):
     """
@@ -57,17 +63,15 @@ def convert_wwara_to_chirp_data(wwara_csv_content):
         tuple: (success: bool, result: str or pandas.DataFrame, error_msg: str)
     """
     try:
-        # Create temporary files for processing
+        # Create temporary file for processing
         with tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False) as input_temp:
             input_temp.write(wwara_csv_content)
             input_temp_path = input_temp.name
             
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False) as output_temp:
-            output_temp_path = output_temp.name
-            
         try:
             # Import required modules for conversion
-            from wwara_chirp.wwara_chirp import process_row, write_output_file, CHIRP_COLUMNS
+            from wwara_chirp.wwara_chirp import process_row, CHIRP_COLUMNS
+            import wwara_chirp.wwara_chirp as wwara_module
             
             # Initialize conversion variables
             channel = 0
@@ -84,8 +88,7 @@ def convert_wwara_to_chirp_data(wwara_csv_content):
             
             # Process each row
             for index, wwara_row in df.iterrows():
-                # Temporarily set global channel variable
-                import wwara_chirp.wwara_chirp as wwara_module
+                # Set global channel variable for processing
                 wwara_module.channel = channel
                 
                 chirp_row = process_row(wwara_row)
@@ -107,9 +110,8 @@ def convert_wwara_to_chirp_data(wwara_csv_content):
             return True, converted_csv, None
             
         finally:
-            # Clean up temporary files
+            # Clean up temporary file
             Path(input_temp_path).unlink(missing_ok=True)
-            Path(output_temp_path).unlink(missing_ok=True)
             
     except Exception as e:
         log.error(f"Conversion error: {str(e)}")
@@ -189,7 +191,8 @@ def convert_data():
         else:
             # For large files, store temporarily and return download link
             file_id = str(uuid.uuid4())
-            temp_files[file_id] = (result, datetime.now())
+            with temp_files_lock:
+                temp_files[file_id] = (result, datetime.now())
             
             return jsonify({
                 'status': 'success',
@@ -207,16 +210,17 @@ def download_file(file_id):
     """Download converted CSV file by ID"""
     cleanup_expired_files()
     
-    if file_id not in temp_files:
-        return jsonify({'error': 'File not found or expired'}), 404
+    with temp_files_lock:
+        if file_id not in temp_files:
+            return jsonify({'error': 'File not found or expired'}), 404
+            
+        csv_content, _ = temp_files[file_id]
         
-    csv_content, _ = temp_files[file_id]
+        # Remove the file after serving (one-time download)
+        temp_files.pop(file_id, None)
     
     # Create a file-like object from the CSV content
     csv_buffer = io.BytesIO(csv_content.encode('utf-8'))
-    
-    # Remove the file after serving (one-time download)
-    temp_files.pop(file_id, None)
     
     return send_file(
         csv_buffer,

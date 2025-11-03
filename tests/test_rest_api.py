@@ -97,7 +97,7 @@ class TestWWARAChirpRestAPI(unittest.TestCase):
         data = json.loads(response.data)
         if response.status_code == 200:
             self.assertIn('status', data)
-            self.assertTrue(data['status'] in ['success'])
+            self.assertIn(data['status'], ['success'])
             if 'chirp_csv' in data:
                 self.assertIn('Location', data['chirp_csv'])  # Should contain CHIRP headers
         else:
