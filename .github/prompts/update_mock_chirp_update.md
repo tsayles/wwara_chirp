@@ -487,11 +487,16 @@ class GitError(UpdateError):
 
 Before starting implementation, consider:
 
-1. Should the update check run more/less frequently than weekly?
-2. Should PRs be auto-merged if tests pass, or always require manual review?
-3. Are there other constants from chirp_common.py that should be tracked?
-4. Should the solution support tracking multiple source files beyond chirp_common.py?
-5. What's the preferred error notification method (GitHub issue, email, etc.)?
+1. Should the update check run more/less frequently than weekly? 1 week is good given the pace chirp development 
+
+2. Should PRs be auto-merged if tests pass, or always require manual review? plan a progression so that the first few require manual review, but eventually auto-merge and auto-release are possible. 
+
+3. Are there other constants from chirp_common.py that should be tracked?  at this point, only the ones in mock_chirp.py are required.
+
+4. Should the solution support tracking multiple source files beyond chirp_common.py? not needed at this time 
+
+
+5. What's the preferred error notification method (GitHub issue, email, etc.)? email 
 
 ---
 
