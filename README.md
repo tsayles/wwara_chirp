@@ -31,6 +31,28 @@ CSV files are easier to create and maintain, and they seamlessly integrate with
 CHIRP’s features, allowing users to import frequency data across a wide range of
 supported radios without the schema-related errors encountered with XML.
 
+## Dependency Management: Mock CHIRP Interface
+
+Because CHIRP is not released through PyPI, wwara_chirp uses a mock interface 
+approach to avoid direct dependencies on the CHIRP project. This approach:
+
+- **Maintains Compatibility**: The `mock_chirp.py` module contains essential 
+  constants (TONES, DTCS_CODES, MODES) extracted from the CHIRP project's 
+  `chirp_common.py` file.
+  
+- **Automatic Updates**: The `update_mock_chirp.py` script automatically checks 
+  for updates to these constants from the upstream CHIRP repository and can 
+  generate pull requests when changes are detected.
+  
+- **CI/CD Integration**: A GitHub Actions workflow runs weekly to check for 
+  updates and automatically create PRs when the upstream CHIRP constants change.
+
+- **Testing**: Automated tests ensure the mock interface stays synchronized with 
+  the CHIRP project and that all functionality continues to work correctly.
+
+This approach ensures wwara_chirp can be easily distributed via PyPI while 
+maintaining compatibility with CHIRP's data structures and validation rules.
+
 ## Prerequisites
 wwara_chirp is tested on python 3.10, 3.11, 3.12, and 3.13
 
@@ -65,6 +87,34 @@ CHIRP format, and write the output file in CSV format for CHIRP import. The
 output file should be imported to a new CHIRP channel list, and specific entries
 can be copy and pasted to the desired radio memory channels of the user's radio
 file.
+
+## Development
+
+### Running Tests
+```bash
+poetry install
+poetry run pytest
+```
+
+### Updating Mock CHIRP Constants
+The mock CHIRP interface is automatically updated via GitHub Actions, but you can 
+also run the update manually:
+
+```bash
+python src/wwara_chirp/update_mock_chirp.py
+```
+
+This script will:
+1. Download the latest `chirp_common.py` from the CHIRP repository
+2. Extract the constants (TONES, DTCS_CODES, MODES)
+3. Compare them with the current values in `mock_chirp.py`
+4. Update `mock_chirp.py` if changes are detected
+5. Create a pull request with the updates (when run via GitHub Actions)
+
+### Testing the CLI
+```bash
+poetry run python -m wwara_chirp.wwara_chirp input.csv output.csv
+```
 
 
 ## Future Plans
