@@ -1,6 +1,19 @@
 # This module provides a mock chirp class which abstracts the functions and
-# methods from the kk7ds/chirp project, and decouples the direct  dependency on
+# methods from the kk7ds/chirp project, and decouples the direct dependency on
 # the kk7ds/chirp project.
+#
+# Purpose:
+# - CHIRP is not available on PyPI, making it difficult to manage as a dependency
+# - This module extracts only the essential constants needed for WWARA CHIRP Export
+# - Enables wwara_chirp to be distributed via PyPI without CHIRP dependency issues
+#
+# Maintenance:
+# - Constants are synchronized with upstream CHIRP via update_mock_chirp.py
+# - A GitHub Actions workflow runs weekly to check for updates
+# - Pull requests are automatically created when upstream changes are detected
+#
+# Constants sourced from:
+# https://github.com/kk7ds/chirp/blob/master/chirp/chirp_common.py
 
 import difflib
 
