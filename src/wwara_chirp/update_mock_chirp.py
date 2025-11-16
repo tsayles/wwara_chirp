@@ -2,6 +2,17 @@
 # file in the wwara_chirp repository. It compares the constants in mock_chirp.py
 # with those in chirp_common.py and updates them if necessary. If any updates are
 # made, it creates a pull request to merge the changes into the dev branch.
+#
+# Usage:
+# - Automatically via GitHub Actions (weekly schedule)
+# - Manually: python src/wwara_chirp/update_mock_chirp.py
+#
+# Process:
+# 1. Download chirp_common.py from upstream CHIRP repository
+# 2. Extract constants (TONES, DTCS_CODES, MODES)
+# 3. Compare with current mock_chirp.py constants
+# 4. Update mock_chirp.py if changes detected
+# 5. Create PR with updates (when GITHUB_TOKEN is available)
 
 import os
 import subprocess

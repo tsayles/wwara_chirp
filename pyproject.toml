@@ -61,7 +61,7 @@ PyGithub = ">=1.55,<3.0"
 pandas = "~2.2.3"
 numpy = "~2.2.4"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = ">=6.0"
 
 [project.optional-dependencies]
