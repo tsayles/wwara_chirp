@@ -1,5 +1,14 @@
 # WWARA CHIRP Export Script
-WWARA CHIRP is a Python CLI tool that converts Western Washington Amateur Relay Association (WWARA) repeater CSV data to CHIRP-compatible CSV format for amateur radio programming.
+
+## About This File
+This file provides custom instructions for GitHub Copilot when working on the WWARA CHIRP repository. These instructions help ensure consistency, efficiency, and quality when making changes to the codebase.
+
+## Project Overview
+WWARA CHIRP is a Python CLI tool that converts Western Washington Amateur Relay Association (WWARA) repeater CSV data to CHIRP-compatible CSV format for amateur radio programming. The project:
+- Supports Python 3.10, 3.11, 3.12, and 3.13
+- Uses pandas for CSV processing
+- Validates CHIRP CSV format requirements
+- Is licensed under GPL-3.0 for compatibility with the CHIRP project
 
 Always reference these instructions first and fallback to search or bash commands only when you encounter unexpected information that does not match the info here.
 
@@ -148,3 +157,51 @@ cd tests && pytest -v
 - `.github/workflows/python-package.yml`: Tests on multiple Python versions, runs pytest and CLI validation
 - `.github/workflows/cli-test-push.yml`: Tests packaged CLI tool installation and execution
 - `.github/workflows/update_mock_chirp.yml`: Automated updates from upstream CHIRP project
+
+## Code Style and Conventions
+- Follow PEP 8 style guidelines with max line length of 127 characters
+- Use descriptive variable names that match the domain (e.g., `OUTPUT_FREQ`, `INPUT_FREQ`, `CTCSS_IN`)
+- Add docstrings to functions and classes following Google style
+- Use type hints where helpful for clarity
+- Keep functions focused on a single responsibility
+- Complex functions (like `ChirpValidator.validate_row` and `process_row`) are acceptable given the domain complexity
+- Use logging (not print statements) for debugging and user feedback
+- Maintain consistency with existing code patterns in the repository
+
+## Security Considerations
+- Never commit sensitive data (API keys, credentials, etc.) to the repository
+- The project processes user-provided CSV files - validate input thoroughly
+- File paths must be validated to prevent directory traversal attacks
+- Output files should not overwrite existing files without explicit user consent
+- Dependencies are pinned to specific versions to ensure reproducible builds
+- The GPL-3.0 license ensures code compatibility with the upstream CHIRP project
+- When adding new dependencies, verify they are from trusted sources
+
+## Common Tasks and Patterns
+### Adding a new field to the conversion
+1. Update `WWARA_COLUMNS` list in `wwara_chirp.py` if adding input field
+2. Update `CHIRP_COLUMNS` list if adding output field
+3. Modify `process_row()` function to handle the mapping
+4. Add validation logic in `ChirpValidator` if needed
+5. Update test files (`WWARA-rptrlist-TEST.csv`, `reference_output.csv`)
+6. Run full validation workflow
+
+### Adding support for a new tone or mode
+1. Update constants in `mock_chirp.py` (sourced from CHIRP project)
+2. Update validation logic in `ChirpValidator.validate_row()`
+3. Add test cases in `test_chirp_validator.py`
+4. Run pytest to verify changes
+
+### Debugging conversion issues
+1. Check the logs in `wwara-chirp.log` (created during execution)
+2. Run with test file: `python -m wwara_chirp.wwara_chirp tests/test_files/WWARA-rptrlist-TEST.csv /tmp/debug_output.csv`
+3. Compare output with reference: `diff /tmp/debug_output.csv tests/test_files/reference_output.csv`
+4. Use Python debugger or add logging statements in `process_row()` function
+
+## Tips for Effective Changes
+- Make minimal, focused changes that address a specific issue
+- Always run linting and tests before finalizing changes
+- Use the existing test infrastructure - don't add new testing frameworks
+- Documentation changes generally don't require tests unless there are doc-specific tests
+- When updating dependencies, check for breaking changes in release notes
+- The project prioritizes reliability and compatibility over new features
