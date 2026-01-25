@@ -25,4 +25,4 @@ jobs:
 
     - name: Run update_mock_chirp.py
       run: |
-        python src/wwara_chirp/update_mock_chirp.py
+        poetry run python src/wwara_chirp/update_mock_chirp.py
