@@ -46,3 +46,19 @@
 2025-11-16 02:32:53,986 - INFO - Number of memory channels written: 434
 2025-11-16 02:32:53,989 - INFO - Output file written: test_files/test_output.csv
 2025-11-16 02:32:53,989 - INFO - Number of memory channels written: 0
+2026-01-25 20:15:24,311 - DEBUG - Script started
+2026-01-25 20:15:24,311 - DEBUG - Input file: test_files/WWARA-rptrlist-TEST.csv
+2026-01-25 20:15:24,311 - DEBUG - Output file: test_files/test_output_main.csv
+2026-01-25 20:15:24,311 - DEBUG - Reading input file: test_files/WWARA-rptrlist-TEST.csv
+2026-01-25 20:15:24,316 - DEBUG - Number of memory channels read: 434
+2026-01-25 20:15:24,559 - INFO - Output file written: test_files/test_output_main.csv
+2026-01-25 20:15:24,559 - INFO - Number of memory channels written: 434
+2026-01-25 20:15:24,561 - DEBUG - Script started
+2026-01-25 20:15:24,561 - DEBUG - Input file: test_files/WWARA-rptrlist-TEST.csv
+2026-01-25 20:15:24,561 - DEBUG - Output file: test_files/test_output_file.csv
+2026-01-25 20:15:24,561 - DEBUG - Reading input file: test_files/WWARA-rptrlist-TEST.csv
+2026-01-25 20:15:24,565 - DEBUG - Number of memory channels read: 434
+2026-01-25 20:15:24,803 - INFO - Output file written: test_files/test_output_file.csv
+2026-01-25 20:15:24,803 - INFO - Number of memory channels written: 434
+2026-01-25 20:15:24,806 - INFO - Output file written: test_files/test_output.csv
+2026-01-25 20:15:24,806 - INFO - Number of memory channels written: 0
