@@ -31,6 +31,37 @@ CSV files are easier to create and maintain, and they seamlessly integrate with
 CHIRP’s features, allowing users to import frequency data across a wide range of
 supported radios without the schema-related errors encountered with XML.
 
+## CHIRP Integration
+
+Since CHIRP is not published to PyPI, this project uses a mock interface 
+approach to decouple from the upstream CHIRP project while maintaining 
+compatibility with CHIRP's data structures and validation requirements.
+
+### mock_chirp Module
+
+The `mock_chirp.py` module provides essential constants and data structures from
+the CHIRP project without requiring a direct dependency:
+
+- **TONES**: 50 standard CTCSS tones used for repeater access
+- **DTCS_CODES**: 104 Digital-Coded Squelch codes
+- **MODES**: Radio operating modes (FM, NFM, AM, etc.)
+
+These constants are used by the `ChirpValidator` class to ensure that generated
+CSV files conform to CHIRP's expected format and valid values.
+
+### Automated Updates
+
+To keep the mock interface synchronized with the upstream CHIRP project, an
+automated GitHub Action workflow (`update_mock_chirp.yml`) runs weekly to:
+
+1. Download the latest `chirp_common.py` from the kk7ds/chirp repository
+2. Compare constants between CHIRP and the local mock_chirp module
+3. Generate a pull request if updates are needed
+
+This approach ensures compatibility with CHIRP while avoiding complex dependency
+management issues associated with the upstream project not being available on
+PyPI.
+
 ## Prerequisites
 wwara_chirp is tested on python 3.10, 3.11, 3.12, and 3.13
 
@@ -75,10 +106,11 @@ encouraged, as the goal is to provide a reliable and user-friendly tool for
 WWARA members and other amateur radio operators.
 
 ## License
-This project is now licensed under the GPL-3.0 License to allow the reuse of
-code from the code from the [chirp project](https://github.com/kk7ds/chirp),
-which is also licensed under GPL-3.0. This change ensures compatibility and
-compliance with the licensing terms of the chirp project.
+This project is licensed under the GPL-3.0 License to ensure compatibility with
+the [chirp project](https://github.com/kk7ds/chirp), which is also licensed 
+under GPL-3.0. This licensing choice allows the project to incorporate 
+constants and data structures from CHIRP (via the mock_chirp module) while 
+maintaining compliance with CHIRP's licensing terms.
 
 If the chirp project is ever published to PyPi under a more permissive license,
 such as the MIT License, we can consider switching back to the MIT License for
