@@ -82,10 +82,42 @@ you can also upgrade the package to the latest stable version.
     pip install -i --upgrade wwara-chirp
     ```
 
+## Getting Input Data
+
+Download the latest WWARA repeater database extract from the official source:
+
+```bash
+curl -O https://www.wwara.org/DataBaseExtract.zip
+unzip DataBaseExtract.zip
+```
+
+The ZIP archive is updated nightly and contains:
+
+| File | Description |
+|------|-------------|
+| `WWARA-rptrlist-DATE.csv` | **Main repeater list** (use this as input) |
+| `WWARA-pending-rptrlist-DATE.csv` | Pending coordination applications |
+| `WWARA-About2Expire-DATE.csv` | Coordinations expiring in next 6 months |
+| `WWARA-Expired-DATE.csv` | Expired coordinations |
+| `readme.txt` | Documentation from WWARA |
+| `copyright.txt` | Copyright notice |
+
+Note: `DATE` in filenames is replaced with the extract date (e.g., `20260201`).
+
 ## Usage
+
 To export WWARA repeater data for CHIRP programming, run the script with the
 following command:
-* `wwara_chirp <input_file> <output_file>`
+
+```bash
+wwara_chirp <input_file> <output_file>
+```
+
+**Example** (using data from the WWARA extract):
+
+```bash
+wwara_chirp WWARA-rptrlist-20260201.csv chirp_output.csv
+```
 
 * `<input_file>` is the CSV file containing WWARA repeater data and
 * `<output_file>` is the CSV file to be generated for CHIRP import. (Be sure the
