@@ -99,11 +99,17 @@ diff /tmp/test_output.csv tests/test_files/reference_output.csv
 
 ### Style Guide
 
-- Follow PEP 8 with 127 character line length
+- Follow PEP 8 with **80 character line length** (preferred)
+  - 127 characters is acceptable for external contributions
 - Use 4 spaces for indentation (no tabs)
+- **Avoid lambda functions** - use named functions instead
 - Add type hints to function signatures
 - Write Google-style docstrings for public APIs
 - See [docs/STYLE_GUIDE.md](docs/STYLE_GUIDE.md) for full details
+
+> **Note**: The 80-column and no-lambda rules are mandatory for
+> AI/agent-generated code but recommended (not required) for
+> external contributions.
 
 ### Commit Messages
 

@@ -178,10 +178,26 @@ cd tests && pytest -v
 
 ### Formatting
 - Follow PEP 8 style guidelines
-- **Line length**: 127 characters (project-specific; homelab standard is 80)
+- **Line length**: 80 characters maximum (mandatory for agent-generated code)
 - Use 4 spaces per indentation level (no tabs)
 - Avoid trailing whitespace on any line
 - Use explicit imports (no wildcards)
+- **No lambda functions**: Use named functions instead for clarity and
+  debuggability (mandatory for agent-generated code)
+
+Example - prefer this:
+```python
+def get_frequency(row):
+    return float(row['OUTPUT_FREQ'])
+
+frequencies = df.apply(get_frequency, axis=1)
+```
+
+Over this:
+```python
+# Avoid: lambda functions are harder to debug and test
+frequencies = df.apply(lambda row: float(row['OUTPUT_FREQ']), axis=1)
+```
 
 ### Naming
 - Use descriptive variable names matching the domain:
