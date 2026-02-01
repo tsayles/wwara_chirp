@@ -1,7 +1,32 @@
 # WWARA CHIRP Export Script
-WWARA CHIRP is a Python CLI tool that converts Western Washington Amateur Relay Association (WWARA) repeater CSV data to CHIRP-compatible CSV format for amateur radio programming.
 
-Always reference these instructions first and fallback to search or bash commands only when you encounter unexpected information that does not match the info here.
+## About This File
+
+This file provides custom instructions for GitHub Copilot when working on
+the WWARA CHIRP repository. These instructions help ensure consistency,
+efficiency, and quality when making changes to the codebase.
+
+**Related Documentation:**
+- [CONTRIBUTING.md](../../CONTRIBUTING.md) - How to contribute
+- [CODE_OF_CONDUCT.md](../../CODE_OF_CONDUCT.md) - Community guidelines
+- [docs/STYLE_GUIDE.md](../../docs/STYLE_GUIDE.md) - Python style guide
+
+## Project Overview
+
+WWARA CHIRP is a Python CLI tool that converts Western Washington Amateur
+Relay Association (WWARA) repeater CSV data to CHIRP-compatible CSV format
+for amateur radio programming.
+
+**Project Details:**
+- **Python Versions**: 3.10, 3.11, 3.12, 3.13
+- **License**: GPL-3.0 (for CHIRP project compatibility)
+- **Core Dependencies**: pandas (~2.2.3), numpy (~2.2.4)
+- **Testing**: pytest with reference output comparison
+- **CI/CD**: GitHub Actions for multi-version testing
+
+Always reference these instructions first and fallback to search or bash
+commands only when you encounter unexpected information that does not
+match the info here.
 
 ## Working Effectively
 - Bootstrap, build, and test the repository:
@@ -148,3 +173,131 @@ cd tests && pytest -v
 - `.github/workflows/python-package.yml`: Tests on multiple Python versions, runs pytest and CLI validation
 - `.github/workflows/cli-test-push.yml`: Tests packaged CLI tool installation and execution
 - `.github/workflows/update_mock_chirp.yml`: Automated updates from upstream CHIRP project
+
+## Code Style and Conventions
+
+### Formatting
+- Follow PEP 8 style guidelines
+- **Line length**: 80 characters maximum (mandatory for agent-generated code)
+- Use 4 spaces per indentation level (no tabs)
+- Avoid trailing whitespace on any line
+- Use explicit imports (no wildcards)
+- **No lambda functions**: Use named functions instead for clarity and
+  debuggability (mandatory for agent-generated code)
+
+Example - prefer this:
+```python
+def get_frequency(row):
+    return float(row['OUTPUT_FREQ'])
+
+frequencies = df.apply(get_frequency, axis=1)
+```
+
+Over this:
+```python
+# Avoid: lambda functions are harder to debug and test
+frequencies = df.apply(lambda row: float(row['OUTPUT_FREQ']), axis=1)
+```
+
+### Naming
+- Use descriptive variable names matching the domain:
+  - `OUTPUT_FREQ`, `INPUT_FREQ`, `CTCSS_IN` for radio fields
+  - `process_row`, `validate_row` for functions
+- Follow PEP 8 naming: `lower_case_with_underscores` for functions/variables,
+  `CapitalizedWords` for classes, `UPPER_CASE` for constants
+
+### Documentation
+- Add docstrings to functions and classes following Google style
+- Use type hints for function parameters and return values
+- Comments should explain "why", not "what"
+
+### Design Principles
+- Keep functions focused on a single responsibility
+- Complex functions (like `ChirpValidator.validate_row` and `process_row`)
+  are acceptable given the domain complexity
+- Favor composition over inheritance
+- Maintain consistency with existing code patterns
+
+### Logging
+- Use Python's `logging` module (not print statements)
+- Use module-level logger: `logger = logging.getLogger(__name__)`
+- Log levels: DEBUG for diagnostics, INFO for operations, WARNING for
+  recoverable issues, ERROR for failures
+- Log file operations with paths, record counts, and relevant context
+- Avoid logging sensitive information
+
+## Security Considerations
+
+- **Never commit sensitive data** (API keys, credentials) to the repository
+- **Input validation**: The project processes user-provided CSV files -
+  validate input thoroughly using `ChirpValidator`
+- **Path traversal**: File paths must be validated to prevent directory
+  traversal attacks
+- **Output safety**: Output files should not overwrite existing files
+  without explicit user consent
+- **Dependencies**: Pinned to specific versions for reproducible builds
+- **New dependencies**: Verify from trusted sources before adding
+- **License**: GPL-3.0 ensures compatibility with upstream CHIRP project
+
+## Common Tasks and Patterns
+### Adding a new field to the conversion
+1. Update `WWARA_COLUMNS` list in `wwara_chirp.py` if adding input field
+2. Update `CHIRP_COLUMNS` list if adding output field
+3. Modify `process_row()` function to handle the mapping
+4. Add validation logic in `ChirpValidator` if needed
+5. Update test files (`WWARA-rptrlist-TEST.csv`, `reference_output.csv`)
+6. Run full validation workflow
+
+### Adding support for a new tone or mode
+1. Update constants in `mock_chirp.py` (sourced from CHIRP project)
+2. Update validation logic in `ChirpValidator.validate_row()`
+3. Add test cases in `test_chirp_validator.py`
+4. Run pytest to verify changes
+
+### Debugging conversion issues
+1. Check the logs in `wwara-chirp.log` (created during execution)
+2. Run with test file: `python -m wwara_chirp.wwara_chirp tests/test_files/WWARA-rptrlist-TEST.csv /tmp/debug_output.csv`
+3. Compare output with reference: `diff /tmp/debug_output.csv tests/test_files/reference_output.csv`
+4. Use Python debugger or add logging statements in `process_row()` function
+
+## Tips for Effective Changes
+
+- Make minimal, focused changes that address a specific issue
+- Always run linting and tests before finalizing changes
+- Use the existing test infrastructure - don't add new testing frameworks
+- Documentation changes generally don't require tests unless there are
+  doc-specific tests
+- When updating dependencies, check for breaking changes in release notes
+- The project prioritizes reliability and compatibility over new features
+
+## Unit Testing Requirements
+
+- All new functions and classes must include corresponding unit tests
+- Use `pytest` as the testing framework
+- Place tests in the `tests/` directory following existing patterns
+- Test cases should be clear, descriptive, and cover edge cases
+- Use reference output files in `tests/test_files/` for validation
+- Mock external dependencies (files, network) for deterministic tests
+- Follow the Arrange-Act-Assert pattern
+
+### Test File Conventions
+- `test_*.py` for test modules
+- Test one concept per test function
+- Use descriptive test names: `test_process_row_handles_empty_ctcss`
+
+## Code Review Checklist
+
+Before submitting code for review, ensure:
+
+- [ ] Code follows PEP 8 and project style (127 char lines)
+- [ ] Functions have type hints
+- [ ] Public APIs have Google-style docstrings
+- [ ] Logging is implemented for important operations
+- [ ] Unit tests are written and passing (`pytest`)
+- [ ] Linting passes (`flake8 --select=E9,F63,F7,F82`)
+- [ ] End-to-end validation passes (compare with reference output)
+- [ ] No hardcoded secrets or sensitive data
+- [ ] Imports are organized and explicit
+- [ ] Error handling is appropriate
+
+For detailed Python coding standards, see [docs/STYLE_GUIDE.md](../../docs/STYLE_GUIDE.md).
