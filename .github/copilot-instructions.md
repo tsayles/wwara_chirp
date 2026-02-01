@@ -6,6 +6,11 @@ This file provides custom instructions for GitHub Copilot when working on
 the WWARA CHIRP repository. These instructions help ensure consistency,
 efficiency, and quality when making changes to the codebase.
 
+**Related Documentation:**
+- [CONTRIBUTING.md](../../CONTRIBUTING.md) - How to contribute
+- [CODE_OF_CONDUCT.md](../../CODE_OF_CONDUCT.md) - Community guidelines
+- [docs/STYLE_GUIDE.md](../../docs/STYLE_GUIDE.md) - Python style guide
+
 ## Project Overview
 
 WWARA CHIRP is a Python CLI tool that converts Western Washington Amateur
@@ -279,103 +284,4 @@ Before submitting code for review, ensure:
 - [ ] Imports are organized and explicit
 - [ ] Error handling is appropriate
 
-## Python Style Guide
-
-This section provides Python-specific coding standards for this project.
-
-### Code Formatting
-
-- Use 4 spaces per indentation level (no tabs)
-- Follow PEP 8 except where overridden by project-specific settings
-- **Line length**: 127 characters maximum (project-specific)
-- Break long statements into multiple lines with proper indentation
-- Avoid trailing whitespace on any line
-
-### Imports
-
-- Use explicit imports; avoid wildcard imports (`from x import *`)
-- Follow PEP 8 import ordering:
-  1. Standard library imports
-  2. Related third-party imports (pandas, numpy)
-  3. Local application imports (wwara_chirp modules)
-- Group imports by category with a blank line between each group
-
-Example:
-```python
-import logging
-import os
-from typing import Dict, List, Optional
-
-import pandas as pd
-
-from wwara_chirp.chirpvalidator import ChirpValidator
-```
-
-### Type Hints
-
-- Use type hints in function signatures for clarity
-- Add type hints to parameters and return values
-- Use `typing` module for complex types (List, Dict, Optional, Union)
-
-Example:
-```python
-def process_row(
-    row: pd.Series,
-    validator: ChirpValidator
-) -> Optional[Dict[str, str]]:
-    """Process a single row from WWARA CSV."""
-    ...
-```
-
-### Docstrings (Google Style)
-
-- Use Google-style docstrings for all public functions and classes
-- Include descriptions of parameters, return values, and exceptions
-
-Example:
-```python
-def validate_frequency(freq: str) -> bool:
-    """Validate a frequency value for CHIRP compatibility.
-
-    Args:
-        freq: Frequency string in MHz format (e.g., "146.520").
-
-    Returns:
-        True if the frequency is valid, False otherwise.
-
-    Raises:
-        ValueError: If freq is not a valid numeric string.
-    """
-    ...
-```
-
-### Error Handling
-
-- Use specific exception types rather than generic `Exception`
-- Handle exceptions at the appropriate level of abstraction
-- Clean up resources using context managers (`with` statement)
-- Include helpful error messages explaining what went wrong
-- Log exceptions with context when appropriate
-
-Example:
-```python
-try:
-    df = pd.read_csv(input_path)
-except FileNotFoundError:
-    logger.error(f"Input file not found: {input_path}")
-    raise
-except pd.errors.EmptyDataError:
-    logger.error(f"Input file is empty: {input_path}")
-    raise
-```
-
-### Architecture and Design
-
-- Follow SOLID principles for object-oriented design
-- Separate concerns by organizing code into modules with clear
-  responsibilities
-- Favor composition over inheritance
-- Write modular code that can be easily tested
-- Prefer immutable data structures where possible
-- Avoid premature optimization; focus on clarity first
-- Refactor regularly to improve structure and reduce technical debt
+For detailed Python coding standards, see [docs/STYLE_GUIDE.md](../../docs/STYLE_GUIDE.md).
