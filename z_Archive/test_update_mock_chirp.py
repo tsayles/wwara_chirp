@@ -6,6 +6,13 @@ import unittest
 import ast
 from src.wwara_chirp.update_mock_chirp import UpdateConstants
 
+try:
+    from src.wwara_chirp.update_mock_chirp import UpdateMockChirp
+    github_available = True
+except ImportError:
+    github_available = False
+
+@unittest.skipIf(not github_available, "PyGithub not available - update_mock_chirp tests skipped")
 class TestUpdateMockChirp(unittest.TestCase):
 
     @classmethod

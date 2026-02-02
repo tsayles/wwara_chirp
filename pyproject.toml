@@ -28,8 +28,9 @@ dependencies = [
     "pandas~=2.2.3",
     "numpy~=2.2.4",
     "requests>=2.26.0",
-    "PyGithub>=1.55.0"
-
+    "PyGithub>=1.55.0",
+    "flask>=2.0.0",
+    "flask-cors>=3.0.0"
 ]
 
 keywords = ["WWARA", "CHIRP"]
@@ -43,6 +44,7 @@ build-backend = "setuptools.build_meta"
 
 [project.scripts]
 wwara_chirp = "wwara_chirp:main"
+wwara_chirp_server = "wwara_chirp.rest_api:run_server"
 
 [tool.poetry]
 name = "wwara-chirp"
@@ -56,7 +58,7 @@ where = ["src"]
 [tool.poetry.dependencies]
 python = ">=3.10,<4"
 requests = "^2.26.0"
-PyGithub = "^1.55.0"
+PyGithub = ">=1.55,<3.0"
 #setuptools = ">=59.6,<77.1"
 pandas = "~2.2.3"
 numpy = "~2.2.4"

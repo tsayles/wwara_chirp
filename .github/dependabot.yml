@@ -13,10 +13,6 @@ updates:
         versions: ["2.x"]
       - dependency-name: "actions/setup-python"  # Ignore specific versions of actions/setup-python
         versions: ["2.x", "3.x", "4.x"]
-    # Add push event trigger
-    push:
-      branches:
-        - dev  # Run on push to dev branch
 
   # Configuration for GitHub Actions dependencies for the master branch
   # Specify the ecosystem for GitHub Actions
