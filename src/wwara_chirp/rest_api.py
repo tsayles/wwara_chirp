@@ -70,8 +70,8 @@ def convert_wwara_to_chirp_data(wwara_csv_content):
             
         try:
             # Import required modules for conversion
-            from wwara_chirp.wwara_chirp import process_row, CHIRP_COLUMNS
             import wwara_chirp.wwara_chirp as wwara_module
+            from wwara_chirp.wwara_chirp import CHIRP_COLUMNS
             
             # Initialize conversion variables
             channel = 0
@@ -91,7 +91,7 @@ def convert_wwara_to_chirp_data(wwara_csv_content):
                 # Set global channel variable for processing
                 wwara_module.channel = channel
                 
-                chirp_row = process_row(wwara_row)
+                chirp_row = wwara_module.process_row(wwara_row)
                 
                 if not validator.validate_row(chirp_row):
                     log.warning(f'Invalid row data at location: {chirp_row["Location"]}')
