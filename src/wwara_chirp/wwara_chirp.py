@@ -161,10 +161,10 @@ def process_row(wwara_row):
     frequency_in = wwara_row['INPUT_FREQ']
 
     if frequency_out > frequency_in:
-        duplex = '+'
+        duplex = '-'
         offset = (frequency_out - frequency_in)
     else:
-        duplex = '-'
+        duplex = '+'
         offset = (frequency_in - frequency_out)
 
     if wwara_row['CTCSS_IN'] != '':

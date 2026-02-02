@@ -1,7 +1,7 @@
 [project]
 name = "wwara-chirp"
 
-version = "2.0.4"
+version = "2.0.5"
 
 description = "WWARA CHIRP Export Script Update"
 readme = "README.md"
@@ -48,7 +48,7 @@ wwara_chirp_server = "wwara_chirp.rest_api:run_server"
 
 [tool.poetry]
 name = "wwara-chirp"
-version = "2.0.4"
+version = "2.0.5"
 description = "WWARA CHIRP Export Script Update"
 authors = ["Tom Sayles (KE4HET) <tsayles@Soot-n-Smoke.com>"]
 

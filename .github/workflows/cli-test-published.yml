@@ -17,10 +17,10 @@ jobs:
       reference_output_file: tests/test_files/reference_output.csv
 
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.10'
 
@@ -30,9 +30,20 @@ jobs:
 
     - name: Install package
       run: |
-        pip install wwara-chirp
+        pip install --pre --extra-index-url https://test.pypi.org/simple/ wwara-chirp
+        echo
+        echo "****************************************************"
+        echo "which wwara_chirp"
         which wwara_chirp
+        echo "wwara_chirp --version"
         wwara_chirp --version
+        python3 -m pip show wwara_chirp
+
+    - name: Check sample test and reference files
+      run: |
+        grep K4LED ${{ env.input_file }}
+        grep K4LED ${{ env.reference_output_file }}
+        
 
     - name: Test CLI tool
       run: |

@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v5  # Check out the repository
+    - uses: actions/checkout@v6  # Check out the repository
 
     - name: Set up Python
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v6
       with:
         python-version: '3.11'
 
@@ -22,7 +22,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install poetry
         poetry install
+        pip install PyGithub  # Install PyGithub for GitHub API access
 
-    - name: Run update_mock_chirp.py
+    - name: Run update_constants.py
       run: |
-        python src/wwara_chirp/update_mock_chirp.py
+        python -m wwara_chirp.update_constants
